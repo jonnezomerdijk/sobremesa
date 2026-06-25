@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobremesa - Dinner with strangers who become friends</title>
+  <meta name="description" content="Sobremesa matches small groups for home-cooked dinners. Good food, a real table, time to linger." />
+  <meta name="theme-color" content="#2E6FFF" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Sobremesa" />
+  <link rel="manifest" href="/static/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --accent: #F5874A;
+      --accent-light: #FDE4D3;
+      --bg: #2E6FFF;
+      --bg-dark: #1A56E8;
+      --surface: #FFFFFF;
+      --surface-tint: #EEF3FF;
+      --ink: #0D1A40;
+      --ink-on-blue: #F5874A;
+      --muted-on-blue: rgba(245,135,74,0.75);
+      --muted: #5A6A9A;
+      --border: #C5D3F5;
+      --success: #2E9E6B;
+      --error: #D94F3D;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--ink-on-blue);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--bg-dark);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ── Logo ── */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      text-decoration: none;
+      color: var(--accent);
+    }
+
+    .logo-text {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .logo-plate {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav a.cta-nav {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      text-decoration: none;
+      background: rgba(245,135,74,0.15);
+      padding: 0.4rem 1.1rem;
+      border-radius: 999px;
+      transition: background 0.15s;
+    }
+    nav a.cta-nav:hover { background: rgba(245,135,74,0.28); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-inner { max-width: 700px; }
+
+    .eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: 0.01em;
+      margin-bottom: 1.75rem;
+      color: var(--ink-on-blue);
+      -webkit-text-stroke: 1px rgba(180, 80, 10, 0.45);
+      paint-order: stroke fill;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted-on-blue);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 0.9rem 2.4rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      border-radius: 999px;
+      box-shadow: 0 4px 20px rgba(245,135,74,0.45);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+    .hero-cta:hover {
+      background: #e07038;
+      box-shadow: 0 6px 26px rgba(245,135,74,0.55);
+      transform: translateY(-2px);
+    }
+    .hero-cta:active { transform: translateY(0); }
+
+    /* ── How it works ── */
+    .how {
+      background: var(--bg-dark);
+      padding: 5rem 2rem;
+    }
+
+    .how-inner {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted-on-blue);
+      margin-bottom: 3rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      padding: 2rem;
+    }
+
+    .step-num {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+      background: rgba(245,135,74,0.18);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .step h3 {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: var(--ink-on-blue);
+    }
+
+    .step p {
+      font-size: 0.9rem;
+      color: var(--muted-on-blue);
+      line-height: 1.65;
+    }
+
+    /* ── Signup form - white card on blue ── */
+    .signup-section {
+      padding: 5rem 2rem 6rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .form-card {
+      background: var(--surface);
+      border-radius: 32px;
+      padding: 3rem 2.5rem;
+      box-shadow: 0 8px 40px rgba(10,30,80,0.25);
+      color: var(--ink);
+    }
+
+    .signup-section h2 {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 400;
+      color: var(--ink);
+      margin-bottom: 0.4rem;
+    }
+
+    .signup-section .sub {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    .field { margin-bottom: 1.75rem; }
+
+    .field-label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.6rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    select {
+      width: 100%;
+      padding: 0.75rem 1.1rem;
+      border: 2px solid var(--border);
+      background: var(--surface-tint);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      border-radius: 14px;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--bg);
+      box-shadow: 0 0 0 3px rgba(46,111,255,0.18);
+      background: var(--surface);
+    }
+
+    /* City autocomplete */
+    .city-wrap { position: relative; }
+    .city-suggestions {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0; right: 0;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 4px 20px rgba(46,111,255,0.12);
+      z-index: 50;
+      overflow: hidden;
+      display: none;
+    }
+    .city-suggestions.open { display: block; }
+    .city-suggestion {
+      padding: 0.65rem 1.1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.1s;
+      font-family: 'Nunito', sans-serif;
+    }
+    .city-suggestion:hover, .city-suggestion.active { background: var(--surface-tint); }
+
+    /* Day-of-week pills */
+    .day-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .day-group input[type="checkbox"] { display: none; }
+    .day-group label {
+      display: inline-block;
+      padding: 0.45rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-tint);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+      text-transform: none;
+      letter-spacing: 0;
+      margin: 0;
+    }
+    .day-group input[type="checkbox"]:checked + label {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    /* Checkbox group */
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Radio cards */
+    .radio-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+
+    .radio-card {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-tint);
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-transform: none;
+      letter-spacing: 0;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .radio-card:has(input:checked) {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+
+    .radio-card input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* Matters toggle */
+    .matters-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 0.75rem;
+    }
+
+    .matters-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: 0;
+      text-transform: none;
+      margin: 0;
+    }
+
+    .pill-toggle {
+      display: flex;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .pill-toggle input[type="radio"] { display: none; }
+
+    .pill-toggle label {
+      padding: 0.28rem 0.9rem;
+      cursor: pointer;
+      color: var(--muted);
+      background: transparent;
+      transition: background 0.15s, color 0.15s;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: none;
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .pill-toggle input[type="radio"]:checked + label {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Travel slider */
+    .slider-wrap { position: relative; padding-bottom: 1.5rem; }
+
+    input[type="range"] {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--border);
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 2px 6px rgba(245,135,74,0.4);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+    }
+
+    .slider-ticks {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.4rem;
+    }
+    .slider-ticks span {
+      font-size: 0.75rem;
+      color: var(--muted);
+      width: 25%;
+      text-align: center;
+    }
+    .slider-ticks span:first-child { text-align: left; }
+    .slider-ticks span:last-child  { text-align: right; }
+
+    .slider-value {
+      margin-top: 0.35rem;
+      font-size: 0.82rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* Bring a friend */
+    .friend-toggle-btn {
+      background: var(--surface-tint);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 0.75rem 1.2rem;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: border-color 0.15s, color 0.15s;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .friend-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    .friend-content {
+      display: none;
+      margin-top: 1rem;
+      padding: 1.25rem;
+      background: var(--accent-light);
+      border-radius: 14px;
+      border: 2px solid #F9C5A7;
+    }
+    .friend-content.open { display: block; }
+
+    .code-display {
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin: 0.5rem 0 0.25rem;
+    }
+
+    .code-hint { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+
+    .copy-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      padding: 0.4rem 1.2rem;
+      font-size: 0.8rem;
+      font-family: 'Fredoka One', sans-serif;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      margin-bottom: 1.25rem;
+      transition: background 0.15s;
+    }
+    .copy-btn:hover { background: #e07038; }
+
+    .divider-or {
+      text-align: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin: 0.75rem 0;
+      position: relative;
+    }
+    .divider-or::before, .divider-or::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: var(--border);
+    }
+    .divider-or::before { left: 0; }
+    .divider-or::after  { right: 0; }
+
+    /* Submit */
+    .submit-btn {
+      margin-top: 1rem;
+      width: 100%;
+      padding: 1rem;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Fredoka One', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: 0.05em;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(245,135,74,0.4);
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+    }
+    .submit-btn:hover {
+      background: #e07038;
+      box-shadow: 0 6px 24px rgba(245,135,74,0.5);
+      transform: translateY(-2px);
+    }
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .form-message {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      font-size: 0.9rem;
+      border-radius: 12px;
+      display: none;
+      font-weight: 600;
+    }
+    .form-message.success { background: #E8F8F1; color: var(--success); border-left: 3px solid var(--success); display: block; }
+    .form-message.error   { background: #FDECEA; color: var(--error);   border-left: 3px solid var(--error);   display: block; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 2rem;
+      text-align: center;
+      color: var(--muted-on-blue);
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 600px) {
+      .checkbox-group { grid-template-columns: 1fr; }
+      .radio-group    { grid-template-columns: 1fr; }
+      .form-card { padding: 2rem 1.25rem; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <!-- Logo: "S·br·m·sa" with plate SVG standing in for the first O -->
+  <a href="/" class="logo">
+    <span class="logo-text" style="letter-spacing:0">S</span><span class="logo-plate" aria-label="o" style="margin:0 1px"><svg width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- fork (left of plate) -->
+        <line x1="3" y1="6" x2="3" y2="11" stroke="#F5874A" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="5" y1="6" x2="5" y2="11" stroke="#F5874A" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="4" y1="11" x2="4" y2="20" stroke="#F5874A" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- plate (solid orange circle) -->
+        <circle cx="17" cy="13" r="10" fill="#F5874A"/>
+        <circle cx="17" cy="13" r="6.5" fill="#E06030" opacity="0.35"/>
+        <!-- knife (right of plate) -->
+        <line x1="30" y1="6" x2="30" y2="20" stroke="#F5874A" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M30 6 C32.5 6 33 8 30 10" stroke="#F5874A" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+      </svg></span><span class="logo-text" style="letter-spacing:0">bremesa</span>
+  </a>
+  <a href="#join" class="cta-nav">Join the table</a>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Barcelona · Coming soon</p>
+    <h1>Dinner with strangers who become <em>friends</em></h1>
+    <p class="hero-sub">
+      Sobremesa brings small groups together for home-cooked dinners. No bars, no apps, no awkward networking. Just good food, a table, and time to linger.
+    </p>
+    <a href="#join" class="hero-cta">Join the table</a>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="how">
+  <div class="how-inner">
+    <p class="section-label">How it works</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Sign up</h3>
+        <p>Tell us where you are, when you're free, and what you eat. That's all we need.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>We match you</h3>
+        <p>We put together a group of 4 to 8 people nearby who share an evening and a table.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Someone cooks</h3>
+        <p>Potluck, one big dish, or a shared spread. The host decides, the guests show up.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Linger a while</h3>
+        <p>Sobremesa - the time after the meal when no one wants to leave. That's the point.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Signup form -->
+<section class="signup-section" id="join">
+  <div class="form-card">
+  <h2>Get a seat at the table</h2>
+  <p class="sub">We'll reach out when your group is ready. No spam, ever.</p>
+
+  <!-- Name -->
+  <div class="field">
+    <label class="field-label" for="name">Your name</label>
+    <input type="text" id="name" placeholder="Elena" required />
+  </div>
+
+  <!-- Email -->
+  <div class="field">
+    <label class="field-label" for="email">Email</label>
+    <input type="email" id="email" placeholder="elena@example.com" required />
+  </div>
+
+  <!-- City autocomplete -->
+  <div class="field">
+    <label class="field-label" for="city-input">Your city</label>
+    <div class="city-wrap">
+      <input type="text" id="city-input" placeholder="Start typing a city…" autocomplete="off" oninput="onCityInput()" onkeydown="onCityKey(event)" />
+      <input type="hidden" id="city" />
+      <input type="hidden" id="lat" />
+      <input type="hidden" id="lng" />
+      <div class="city-suggestions" id="city-suggestions"></div>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:0.4rem" id="location-hint"></p>
+  </div>
+
+  <!-- Travel distance slider -->
+  <div class="field">
+    <label class="field-label">How far are you willing to travel?</label>
+    <input type="range" id="travel-slider" min="0" max="3" step="1" value="1" oninput="onTravelSlider()" />
+    <div class="slider-ticks">
+      <span>5 km</span><span>10 km</span><span>20 km</span><span>50 km</span>
+    </div>
+    <p class="slider-value" id="travel-label">Up to 10 km</p>
+    <input type="hidden" id="max_travel_km" value="10" />
+    <div class="matters-row">
+      <span class="matters-label">Matters to me?</span>
+      <div class="pill-toggle">
+        <input type="radio" name="travel_must" id="trav_flex" value="0" checked /><label for="trav_flex">Flexible</label>
+        <input type="radio" name="travel_must" id="trav_must" value="1" /><label for="trav_must">Deal-breaker</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dietary -->
+  <div class="field">
+    <label class="field-label">Dietary needs</label>
+    <div class="checkbox-group">
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="none" /> No restrictions</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="vegetarian" /> Vegetarian</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="vegan" /> Vegan</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="gluten-free" /> Gluten-free</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="halal" /> Halal</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-onion-garlic" /> No onion/garlic</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-fish" /> No fish</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-seafood" /> No seafood</label>
+    </div>
+    <div class="matters-row">
+      <span class="matters-label">Matters to me?</span>
+      <div class="pill-toggle">
+        <input type="radio" name="dietary_must" id="diet_flex" value="0" checked /><label for="diet_flex">Flexible</label>
+        <input type="radio" name="dietary_must" id="diet_must" value="1" /><label for="diet_must">Deal-breaker</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Availability -->
+  <div class="field">
+    <label class="field-label">When are you generally free?</label>
+    <div class="day-group">
+      <input type="checkbox" name="availability" value="monday" id="day-mon" /><label for="day-mon">Mon</label>
+      <input type="checkbox" name="availability" value="tuesday" id="day-tue" /><label for="day-tue">Tue</label>
+      <input type="checkbox" name="availability" value="wednesday" id="day-wed" /><label for="day-wed">Wed</label>
+      <input type="checkbox" name="availability" value="thursday" id="day-thu" /><label for="day-thu">Thu</label>
+      <input type="checkbox" name="availability" value="friday" id="day-fri" /><label for="day-fri">Fri</label>
+      <input type="checkbox" name="availability" value="saturday" id="day-sat" /><label for="day-sat">Sat</label>
+      <input type="checkbox" name="availability" value="sunday" id="day-sun" /><label for="day-sun">Sun</label>
+    </div>
+    <div class="matters-row">
+      <span class="matters-label">Matters to me?</span>
+      <div class="pill-toggle">
+        <input type="radio" name="avail_must" id="av_flex" value="0" checked /><label for="av_flex">Flexible</label>
+        <input type="radio" name="avail_must" id="av_must" value="1" /><label for="av_must">Deal-breaker</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dinner format -->
+  <div class="field">
+    <label class="field-label">What kind of dinner do you prefer?</label>
+    <div class="radio-group">
+      <label class="radio-card"><input type="radio" name="dinner_format" value="hosted" /> I'd love to host and cook</label>
+      <label class="radio-card"><input type="radio" name="dinner_format" value="potluck" /> Everyone brings a dish</label>
+      <label class="radio-card"><input type="radio" name="dinner_format" value="restaurant" /> Meet at a restaurant</label>
+      <label class="radio-card"><input type="radio" name="dinner_format" value="any" checked /> No preference</label>
+    </div>
+    <div class="matters-row">
+      <span class="matters-label">Matters to me?</span>
+      <div class="pill-toggle">
+        <input type="radio" name="dinner_format_must" id="dfm_flex" value="0" checked /><label for="dfm_flex">Flexible</label>
+        <input type="radio" name="dinner_format_must" id="dfm_must" value="1" /><label for="dfm_must">Deal-breaker</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Group size -->
+  <div class="field">
+    <label class="field-label">Preferred group size</label>
+    <div class="radio-group">
+      <label class="radio-card"><input type="radio" name="group_size_pref" value="small" /> Small - 4 to 5</label>
+      <label class="radio-card"><input type="radio" name="group_size_pref" value="medium" checked /> Medium - 6 to 8</label>
+      <label class="radio-card"><input type="radio" name="group_size_pref" value="large" /> Large - 8 to 10</label>
+    </div>
+    <div class="matters-row">
+      <span class="matters-label">Matters to me?</span>
+      <div class="pill-toggle">
+        <input type="radio" name="size_must" id="sz_flex" value="0" checked /><label for="sz_flex">Flexible</label>
+        <input type="radio" name="size_must" id="sz_must" value="1" /><label for="sz_must">Deal-breaker</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Date of birth → age -->
+  <div class="field">
+    <label class="field-label" for="birthdate">Date of birth <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+    <input type="date" id="birthdate" max="" onchange="onBirthdate()" style="max-width:220px" />
+    <p id="age-hint" style="font-size:0.78rem;color:var(--muted);margin-top:0.4rem"></p>
+    <div class="matters-row" id="age-matters-row" style="display:none">
+      <span class="matters-label">Age range matters to me?</span>
+      <div class="pill-toggle">
+        <input type="radio" name="age_range_must" id="arm_flex" value="0" checked /><label for="arm_flex">Flexible</label>
+        <input type="radio" name="age_range_must" id="arm_must" value="1" /><label for="arm_must">Deal-breaker</label>
+      </div>
+    </div>
+    <input type="hidden" id="age" />
+  </div>
+
+  <!-- Bring a friend -->
+  <div class="field">
+    <button type="button" class="friend-toggle-btn" onclick="toggleFriend()">
+      <span>Signing up with someone? 🙋</span>
+      <span id="friend-arrow">▾</span>
+    </button>
+    <div class="friend-content" id="friend-content">
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem">Share this code with your plus-one - you'll always be placed in the same group.</p>
+      <div class="code-display" id="link-code-display"></div>
+      <p class="code-hint">Your personal link code</p>
+      <button type="button" class="copy-btn" onclick="copyCode()">Copy code</button>
+      <div class="divider-or">or enter theirs</div>
+      <label class="field-label" for="partner-code" style="margin-top:0.75rem">Partner's code</label>
+      <input type="text" id="partner-code" placeholder="e.g. A3F8KL2Z" maxlength="8"
+             style="text-transform:uppercase;letter-spacing:0.1em"
+             oninput="this.value=this.value.toUpperCase()" />
+    </div>
+  </div>
+
+  <!-- Host preference -->
+  <div class="field" style="margin-top:0.5rem">
+    <label class="checkbox-row" for="can_host" style="display:flex;align-items:center;gap:0.75rem;cursor:pointer">
+      <input type="checkbox" id="can_host" style="width:20px;height:20px;accent-color:var(--accent);flex-shrink:0;cursor:pointer" />
+      <span style="font-family:'Nunito',sans-serif;font-size:0.95rem;color:#fff;line-height:1.4">
+        I'm open to hosting - happy to have the group over at my place
+      </span>
+    </label>
+  </div>
+
+  <button class="submit-btn" onclick="handleSignup()">Join the waitlist</button>
+  <div class="form-message" id="msg"></div>
+  </div><!-- /.form-card -->
+</section>
+
+<footer>
+  © 2025 Sobremesa &nbsp;·&nbsp; Barcelona
+</footer>
+
+<script>
+  // ── Travel slider ──
+  const TRAVEL_KM = [5, 10, 20, 50];
+  const TRAVEL_LABELS = ['Up to 5 km', 'Up to 10 km', 'Up to 20 km', 'Up to 50 km'];
+  function onTravelSlider() {
+    const idx = parseInt(document.getElementById('travel-slider').value);
+    document.getElementById('travel-label').textContent = TRAVEL_LABELS[idx];
+    document.getElementById('max_travel_km').value = TRAVEL_KM[idx];
+  }
+
+  // ── Birthdate → age ──
+  document.getElementById('birthdate').max = new Date().toISOString().split('T')[0];
+  function onBirthdate() {
+    const val = document.getElementById('birthdate').value;
+    if (!val) {
+      document.getElementById('age').value = '';
+      document.getElementById('age-hint').textContent = '';
+      document.getElementById('age-matters-row').style.display = 'none';
+      return;
+    }
+    const dob = new Date(val);
+    const today = new Date();
+    let age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+    document.getElementById('age').value = age;
+    document.getElementById('age-hint').textContent = `Age: ${age}`;
+    document.getElementById('age-matters-row').style.display = 'flex';
+  }
+
+  // ── City autocomplete (Nominatim) ──
+  let cityTimer, cityResults = [], citySelected = -1;
+
+  function onCityInput() {
+    clearTimeout(cityTimer);
+    const q = document.getElementById('city-input').value.trim();
+    const box = document.getElementById('city-suggestions');
+    if (q.length < 2) { box.classList.remove('open'); box.innerHTML = ''; return; }
+    cityTimer = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&featuretype=city,town,village`
+        );
+        const data = await res.json();
+        cityResults = data;
+        citySelected = -1;
+        box.innerHTML = data.map((r, i) =>
+          `<div class="city-suggestion" data-i="${i}" onmousedown="selectCity(${i})">${r.display_name.split(',').slice(0,3).join(', ')}</div>`
+        ).join('');
+        box.classList.toggle('open', data.length > 0);
+      } catch {}
+    }, 350);
+  }
+
+  function selectCity(i) {
+    const r = cityResults[i];
+    const label = r.display_name.split(',').slice(0,2).join(', ');
+    document.getElementById('city-input').value = label;
+    document.getElementById('city').value = label;
+    document.getElementById('lat').value = r.lat;
+    document.getElementById('lng').value = r.lon;
+    document.getElementById('location-hint').textContent = '📍 ' + label;
+    document.getElementById('city-suggestions').classList.remove('open');
+  }
+
+  function onCityKey(e) {
+    const items = document.querySelectorAll('.city-suggestion');
+    if (!items.length) return;
+    if (e.key === 'ArrowDown') { citySelected = Math.min(citySelected + 1, items.length - 1); }
+    else if (e.key === 'ArrowUp') { citySelected = Math.max(citySelected - 1, 0); }
+    else if (e.key === 'Enter' && citySelected >= 0) { e.preventDefault(); selectCity(citySelected); return; }
+    else return;
+    items.forEach((el, i) => el.classList.toggle('active', i === citySelected));
+  }
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.city-wrap')) document.getElementById('city-suggestions').classList.remove('open');
+  });
+
+  // ── Link code ──
+  const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  function genCode() {
+    let c = ''; for (let i = 0; i < 8; i++) c += CHARS[Math.floor(Math.random() * CHARS.length)]; return c;
+  }
+  const MY_CODE = genCode();
+  document.getElementById('link-code-display').textContent = MY_CODE;
+
+  function toggleFriend() {
+    const c = document.getElementById('friend-content');
+    const a = document.getElementById('friend-arrow');
+    a.textContent = c.classList.toggle('open') ? '▴' : '▾';
+  }
+
+  function copyCode() {
+    navigator.clipboard.writeText(MY_CODE).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = 'Copied!';
+      setTimeout(() => btn.textContent = 'Copy code', 1500);
+    });
+  }
+
+  // ── Submit ──
+  async function handleSignup() {
+    const btn = document.querySelector('.submit-btn');
+    const msg = document.getElementById('msg');
+    msg.className = 'form-message';
+    msg.textContent = '';
+
+    const name     = document.getElementById('name').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    const city     = document.getElementById('city').value.trim() || document.getElementById('city-input').value.trim() || null;
+    const latVal   = document.getElementById('lat').value;
+    const lngVal   = document.getElementById('lng').value;
+    const lat      = latVal ? parseFloat(latVal) : null;
+    const lng      = lngVal ? parseFloat(lngVal) : null;
+    const max_travel_km = parseInt(document.getElementById('max_travel_km').value);
+
+    const dietary      = [...document.querySelectorAll('[name="dietary"]:checked')].map(e => e.value);
+    const availability = [...document.querySelectorAll('[name="availability"]:checked')].map(e => e.value);
+
+    const dinner_format        = document.querySelector('[name="dinner_format"]:checked')?.value || 'any';
+    const dinner_format_is_must = document.querySelector('[name="dinner_format_must"]:checked')?.value === '1';
+    const group_size_pref      = document.querySelector('[name="group_size_pref"]:checked')?.value || 'medium';
+    const group_size_is_must   = document.querySelector('[name="size_must"]:checked')?.value === '1';
+
+    const ageVal = document.getElementById('age').value;
+    const age    = ageVal ? parseInt(ageVal) : null;
+    const age_range_pref  = 10;
+    const age_range_is_must = document.querySelector('[name="age_range_must"]:checked')?.value === '1';
+
+    const partnerCode = document.getElementById('partner-code').value.trim().toUpperCase();
+    const friendOpen  = document.getElementById('friend-content').classList.contains('open');
+    const link_code   = friendOpen ? (partnerCode || MY_CODE) : null;
+    const can_host    = document.getElementById('can_host').checked;
+
+    if (!name || !email) {
+      msg.textContent = 'Please fill in your name and email.';
+      msg.className = 'form-message error'; return;
+    }
+    if (dietary.length === 0) {
+      msg.textContent = 'Please select at least one dietary option.';
+      msg.className = 'form-message error'; return;
+    }
+    if (availability.length === 0) {
+      msg.textContent = 'Please select at least one time you\'re free.';
+      msg.className = 'form-message error'; return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Saving your seat…';
+
+    try {
+      const res = await fetch('/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, email, neighbourhood: city || 'Other',
+          dietary, availability,
+          dinner_format, dinner_format_is_must,
+          group_size_pref,
+          age, age_range_pref, age_range_is_must,
+          city, lat, lng, max_travel_km,
+          link_code, can_host,
+        })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        msg.textContent = data.message;
+        msg.className = 'form-message success';
+        btn.textContent = 'You\'re on the list ✓';
+      } else {
+        msg.textContent = data.detail || 'Something went wrong. Try again.';
+        msg.className = 'form-message error';
+        btn.disabled = false;
+        btn.textContent = 'Join the waitlist';
+      }
+    } catch {
+      msg.textContent = 'Could not connect. Please try again.';
+      msg.className = 'form-message error';
+      btn.disabled = false;
+      btn.textContent = 'Join the waitlist';
+    }
+  }
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/static/sw.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>

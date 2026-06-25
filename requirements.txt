@@ -1,0 +1,6 @@
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic[email]==2.8.2
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+apscheduler==3.10.4
