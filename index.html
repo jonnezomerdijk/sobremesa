@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sobremesa - Dinner with strangers who become friends</title>
   <meta name="description" content="Sobremesa matches small groups for home-cooked dinners. Good food, a real table, time to linger." />
-  <meta name="theme-color" content="#2E6FFF" />
+  <meta name="theme-color" content="#F7EFC6" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Sobremesa" />
@@ -16,19 +16,19 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --accent: #F5874A;
-      --accent-light: #FDE4D3;
-      --bg: #2E6FFF;
-      --bg-dark: #1A56E8;
-      --surface: #FFFFFF;
-      --surface-tint: #EEF3FF;
-      --ink: #0D1A40;
-      --ink-on-blue: #F5874A;
-      --muted-on-blue: rgba(245,135,74,0.75);
-      --muted: #5A6A9A;
-      --border: #C5D3F5;
-      --success: #2E9E6B;
-      --error: #D94F3D;
+      --accent: #8FAF6B;
+      --accent-light: #D9EBCA;
+      --bg: #F7EFC6;
+      --bg-dark: #EFE4AB;
+      --surface: #FFFDF0;
+      --surface-tint: #F2EBBA;
+      --ink: #3D2B2B;
+      --ink-on-blue: #C4737A;
+      --muted-on-blue: rgba(196,115,122,0.7);
+      --muted: #9A7A7A;
+      --border: #D9C99A;
+      --success: #6A9E4F;
+      --error: #C4555A;
     }
 
     html { scroll-behavior: smooth; }
@@ -51,7 +51,7 @@
       justify-content: space-between;
       align-items: center;
       background: var(--bg-dark);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(196,115,122,0.2);
     }
 
     /* ── Logo ── */
@@ -83,12 +83,12 @@
       letter-spacing: 0.04em;
       color: var(--accent);
       text-decoration: none;
-      background: rgba(245,135,74,0.15);
+      background: rgba(143,175,107,0.15);
       padding: 0.4rem 1.1rem;
       border-radius: 999px;
       transition: background 0.15s;
     }
-    nav a.cta-nav:hover { background: rgba(245,135,74,0.28); }
+    nav a.cta-nav:hover { background: rgba(143,175,107,0.28); }
 
     /* ── Hero ── */
     .hero {
@@ -119,7 +119,7 @@
       letter-spacing: 0.01em;
       margin-bottom: 1.75rem;
       color: var(--ink-on-blue);
-      -webkit-text-stroke: 1px rgba(180, 80, 10, 0.45);
+      -webkit-text-stroke: 1px rgba(100, 60, 60, 0.35);
       paint-order: stroke fill;
     }
 
@@ -146,12 +146,12 @@
       letter-spacing: 0.04em;
       text-decoration: none;
       border-radius: 999px;
-      box-shadow: 0 4px 20px rgba(245,135,74,0.45);
+      box-shadow: 0 4px 20px rgba(143,175,107,0.45);
       transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
     }
     .hero-cta:hover {
-      background: #e07038;
-      box-shadow: 0 6px 26px rgba(245,135,74,0.55);
+      background: #7A9A5A;
+      box-shadow: 0 6px 26px rgba(143,175,107,0.55);
       transform: translateY(-2px);
     }
     .hero-cta:active { transform: translateY(0); }
@@ -183,8 +183,8 @@
     }
 
     .step {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(196,115,122,0.2);
       border-radius: 24px;
       padding: 2rem;
     }
@@ -193,7 +193,7 @@
       font-family: 'Fredoka One', sans-serif;
       font-size: 1.1rem;
       color: var(--accent);
-      background: rgba(245,135,74,0.18);
+      background: rgba(143,175,107,0.18);
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -228,7 +228,7 @@
       background: var(--surface);
       border-radius: 32px;
       padding: 3rem 2.5rem;
-      box-shadow: 0 8px 40px rgba(10,30,80,0.25);
+      box-shadow: 0 8px 40px rgba(80,40,40,0.12);
       color: var(--ink);
     }
 
@@ -288,7 +288,7 @@
 
     input:focus, select:focus {
       border-color: var(--bg);
-      box-shadow: 0 0 0 3px rgba(46,111,255,0.18);
+      box-shadow: 0 0 0 3px rgba(143,175,107,0.18);
       background: var(--surface);
     }
 
@@ -301,7 +301,7 @@
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: 14px;
-      box-shadow: 0 4px 20px rgba(46,111,255,0.12);
+      box-shadow: 0 4px 20px rgba(100,80,80,0.08);
       z-index: 50;
       overflow: hidden;
       display: none;
@@ -469,7 +469,7 @@
       width: 22px; height: 22px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 2px 6px rgba(245,135,74,0.4);
+      box-shadow: 0 2px 6px rgba(143,175,107,0.4);
       cursor: pointer;
     }
     input[type="range"]::-moz-range-thumb {
@@ -588,12 +588,12 @@
       border: none;
       border-radius: 999px;
       cursor: pointer;
-      box-shadow: 0 4px 18px rgba(245,135,74,0.4);
+      box-shadow: 0 4px 18px rgba(143,175,107,0.4);
       transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
     }
     .submit-btn:hover {
       background: #e07038;
-      box-shadow: 0 6px 24px rgba(245,135,74,0.5);
+      box-shadow: 0 6px 24px rgba(143,175,107,0.5);
       transform: translateY(-2px);
     }
     .submit-btn:active { transform: translateY(0); }
@@ -633,15 +633,15 @@
   <a href="/" class="logo">
     <span class="logo-text" style="letter-spacing:0">S</span><span class="logo-plate" aria-label="o" style="margin:0 1px"><svg width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- fork (left of plate) -->
-        <line x1="3" y1="6" x2="3" y2="11" stroke="#F5874A" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="5" y1="6" x2="5" y2="11" stroke="#F5874A" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="4" y1="11" x2="4" y2="20" stroke="#F5874A" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="6" x2="3" y2="11" stroke="#C4737A" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="5" y1="6" x2="5" y2="11" stroke="#C4737A" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="4" y1="11" x2="4" y2="20" stroke="#C4737A" stroke-width="1.5" stroke-linecap="round"/>
         <!-- plate (solid orange circle) -->
-        <circle cx="17" cy="13" r="10" fill="#F5874A"/>
-        <circle cx="17" cy="13" r="6.5" fill="#E06030" opacity="0.35"/>
+        <circle cx="17" cy="13" r="10" fill="#C4737A"/>
+        <circle cx="17" cy="13" r="6.5" fill="#A85560" opacity="0.35"/>
         <!-- knife (right of plate) -->
-        <line x1="30" y1="6" x2="30" y2="20" stroke="#F5874A" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M30 6 C32.5 6 33 8 30 10" stroke="#F5874A" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <line x1="30" y1="6" x2="30" y2="20" stroke="#C4737A" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M30 6 C32.5 6 33 8 30 10" stroke="#C4737A" stroke-width="1.3" fill="none" stroke-linecap="round"/>
       </svg></span><span class="logo-text" style="letter-spacing:0">bremesa</span>
   </a>
   <a href="#join" class="cta-nav">Join the table</a>
@@ -853,7 +853,7 @@
   <div class="field" style="margin-top:0.5rem">
     <label class="checkbox-row" for="can_host" style="display:flex;align-items:center;gap:0.75rem;cursor:pointer">
       <input type="checkbox" id="can_host" style="width:20px;height:20px;accent-color:var(--accent);flex-shrink:0;cursor:pointer" />
-      <span style="font-family:'Nunito',sans-serif;font-size:0.95rem;color:#fff;line-height:1.4">
+      <span style="font-family:'Nunito',sans-serif;font-size:0.95rem;color:var(--ink);line-height:1.4">
         I'm open to hosting - happy to have the group over at my place
       </span>
     </label>
@@ -865,7 +865,7 @@
 </section>
 
 <footer>
-  © 2025 Sobremesa &nbsp;·&nbsp; Barcelona
+  © 2026 Sobremesa
 </footer>
 
 <script>
