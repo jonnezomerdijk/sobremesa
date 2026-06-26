@@ -91,6 +91,36 @@
     }
     nav a.cta-nav:hover { background: rgba(143,175,107,0.28); }
 
+    /* ── Language switcher ── */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 0.25rem 0.45rem;
+      border-radius: 999px;
+      transition: background 0.15s;
+      line-height: 1;
+      font-family: 'Nunito', sans-serif;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: 0;
+    }
+    .lang-btn:hover { background: rgba(122,45,62,0.08); }
+    .lang-btn.active { background: rgba(122,45,62,0.15); }
+
     /* ── Hero ── */
     .hero {
       min-height: 100vh;
@@ -630,60 +660,67 @@
 <body>
 
 <nav>
-  <!-- Logo: "S·br·m·sa" with plate SVG standing in for the first O -->
+  <!-- Logo: "S·bremesa" with plate SVG standing in for the first O -->
   <a href="/" class="logo">
     <span class="logo-text" style="letter-spacing:0">S</span><span class="logo-plate" aria-label="o" style="margin:0 1px"><svg width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- fork (left of plate) -->
-        <line x1="3" y1="6" x2="3" y2="11" stroke="#8FAF6B" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="5" y1="6" x2="5" y2="11" stroke="#8FAF6B" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="4" y1="11" x2="4" y2="20" stroke="#8FAF6B" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="6" x2="3" y2="11" stroke="#7A2D3E" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="5" y1="6" x2="5" y2="11" stroke="#7A2D3E" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="4" y1="11" x2="4" y2="20" stroke="#7A2D3E" stroke-width="1.5" stroke-linecap="round"/>
         <!-- plate -->
         <circle cx="17" cy="13" r="10" fill="#7A2D3E"/>
-        <circle cx="17" cy="13" r="6.5" fill="#5C1A28" opacity="0.35"/>
+        <circle cx="17" cy="13" r="5.5" fill="#EFE4AB" opacity="1"/>
         <!-- knife (right of plate) -->
-        <line x1="30" y1="6" x2="30" y2="20" stroke="#8FAF6B" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M30 6 C32.5 6 33 8 30 10" stroke="#8FAF6B" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <line x1="30" y1="6" x2="30" y2="20" stroke="#7A2D3E" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M30 6 C32.5 6 33 8 30 10" stroke="#7A2D3E" stroke-width="1.3" fill="none" stroke-linecap="round"/>
       </svg></span><span class="logo-text" style="letter-spacing:0">bremesa</span>
   </a>
-  <a href="#join" class="cta-nav">Join the table</a>
+  <div class="nav-right">
+    <div class="lang-switcher" aria-label="Language">
+      <button id="lang-btn-en" class="lang-btn active" onclick="applyTranslation('en')" title="English">🇬🇧</button>
+      <button id="lang-btn-es" class="lang-btn" onclick="applyTranslation('es')" title="Español">🇪🇸</button>
+      <button id="lang-btn-ca" class="lang-btn" onclick="applyTranslation('ca')" title="Català">CA</button>
+    </div>
+    <a href="#join" class="cta-nav" data-i18n="nav_cta">Join the table</a>
+  </div>
 </nav>
 
 <!-- Hero -->
 <section class="hero">
   <div class="hero-inner">
-    <p class="eyebrow">Barcelona · Coming soon</p>
-    <h1>Dine together to find genuine <em>connections</em> through sharing food</h1>
-    <p class="hero-sub">
+    <p class="eyebrow" data-i18n="hero_eyebrow">Barcelona · Coming soon</p>
+    <h1 data-i18n="hero_h1">Dine together to find genuine <em>connections</em> through sharing food</h1>
+    <p class="hero-sub" data-i18n="hero_sub">
       Sobremesa brings small groups together for home-cooked dinners. No bars, no apps, no awkward networking. Just good food, a table, and time to linger.
     </p>
-    <a href="#join" class="hero-cta">Join the table</a>
+    <a href="#join" class="hero-cta" data-i18n="hero_cta">Join the table</a>
   </div>
 </section>
 
 <!-- How it works -->
 <section class="how">
   <div class="how-inner">
-    <p class="section-label">How it works</p>
+    <p class="section-label" data-i18n="how_label">How it works</p>
     <div class="steps">
       <div class="step">
         <div class="step-num">01</div>
-        <h3>Sign up</h3>
-        <p>Tell us where you are, when you're free, and what you eat. That's all we need.</p>
+        <h3 data-i18n="step1_title">Sign up</h3>
+        <p data-i18n="step1_desc">Tell us where you are, when you're free, and what you eat. That's all we need.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <h3>We match you</h3>
-        <p>We put together a group of 4 to 8 people nearby who share an evening and a table.</p>
+        <h3 data-i18n="step2_title">We match you</h3>
+        <p data-i18n="step2_desc">We put together a group of 4 to 8 people nearby who share an evening and a table.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <h3>Someone cooks</h3>
-        <p>Potluck, one big dish, or a shared spread. The host decides, the guests show up.</p>
+        <h3 data-i18n="step3_title">Someone cooks</h3>
+        <p data-i18n="step3_desc">Potluck, one big dish, or a shared spread. The host decides, the guests show up.</p>
       </div>
       <div class="step">
         <div class="step-num">04</div>
-        <h3>Linger a while</h3>
-        <p>Sobremesa - the time after the meal when no one wants to leave. That's the point.</p>
+        <h3 data-i18n="step4_title">Linger a while</h3>
+        <p data-i18n="step4_desc">Sobremesa - the time after the meal when no one wants to leave. That's the point.</p>
       </div>
     </div>
   </div>
@@ -692,24 +729,24 @@
 <!-- Signup form -->
 <section class="signup-section" id="join">
   <div class="form-card">
-  <h2>Get a seat at the table</h2>
-  <p class="sub">We'll reach out when your group is ready. No spam, ever.</p>
+  <h2 data-i18n="form_h2">Get a seat at the table</h2>
+  <p class="sub" data-i18n="form_sub">We'll reach out when your group is ready. No spam, ever.</p>
 
   <!-- Name -->
   <div class="field">
-    <label class="field-label" for="name">Your name</label>
+    <label class="field-label" for="name" data-i18n="label_name">Your name</label>
     <input type="text" id="name" placeholder="Elena" required />
   </div>
 
   <!-- Email -->
   <div class="field">
-    <label class="field-label" for="email">Email</label>
+    <label class="field-label" for="email" data-i18n="label_email">Email</label>
     <input type="email" id="email" placeholder="elena@example.com" required />
   </div>
 
   <!-- City autocomplete -->
   <div class="field">
-    <label class="field-label" for="city-input">Your city</label>
+    <label class="field-label" for="city-input" data-i18n="label_city">Your city</label>
     <div class="city-wrap">
       <input type="text" id="city-input" placeholder="Start typing a city…" autocomplete="off" oninput="onCityInput()" onkeydown="onCityKey(event)" />
       <input type="hidden" id="city" />
@@ -722,7 +759,7 @@
 
   <!-- Travel distance slider -->
   <div class="field">
-    <label class="field-label">How far are you willing to travel?</label>
+    <label class="field-label" data-i18n="label_travel">How far are you willing to travel?</label>
     <input type="range" id="travel-slider" min="0" max="4" step="1" value="2" oninput="onTravelSlider()" />
     <div class="slider-ticks">
       <span>1 km</span><span>5 km</span><span>10 km</span><span>20 km</span><span>50 km</span>
@@ -730,102 +767,102 @@
     <p class="slider-value" id="travel-label">Up to 10 km</p>
     <input type="hidden" id="max_travel_km" value="10" />
     <div class="matters-row">
-      <span class="matters-label">Matters to me?</span>
+      <span class="matters-label" data-i18n="matters_label">Matters to me?</span>
       <div class="pill-toggle">
-        <input type="radio" name="travel_must" id="trav_flex" value="0" checked /><label for="trav_flex">Flexible</label>
-        <input type="radio" name="travel_must" id="trav_must" value="1" /><label for="trav_must">Deal-breaker</label>
+        <input type="radio" name="travel_must" id="trav_flex" value="0" checked /><label for="trav_flex" data-i18n="pill_flexible">Flexible</label>
+        <input type="radio" name="travel_must" id="trav_must" value="1" /><label for="trav_must" data-i18n="pill_dealbreaker">Deal-breaker</label>
       </div>
     </div>
   </div>
 
   <!-- Dietary -->
   <div class="field">
-    <label class="field-label">Dietary needs</label>
+    <label class="field-label" data-i18n="label_dietary">Dietary needs</label>
     <div class="checkbox-group">
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="none" /> No restrictions</label>
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="vegetarian" /> Vegetarian</label>
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="vegan" /> Vegan</label>
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="gluten-free" /> Gluten-free</label>
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="halal" /> Halal</label>
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-onion-garlic" /> No onion/garlic</label>
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-fish" /> No fish</label>
-      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-seafood" /> No seafood</label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="none" /> <span data-i18n="diet_none">No restrictions</span></label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="vegetarian" /> <span data-i18n="diet_vegetarian">Vegetarian</span></label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="vegan" /> <span data-i18n="diet_vegan">Vegan</span></label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="gluten-free" /> <span data-i18n="diet_gluten">Gluten-free</span></label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="halal" /> <span data-i18n="diet_halal">Halal</span></label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-onion-garlic" /> <span data-i18n="diet_no_onion">No onion/garlic</span></label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-fish" /> <span data-i18n="diet_no_fish">No fish</span></label>
+      <label class="checkbox-label"><input type="checkbox" name="dietary" value="no-seafood" /> <span data-i18n="diet_no_seafood">No seafood</span></label>
     </div>
     <div class="matters-row">
-      <span class="matters-label">Matters to me?</span>
+      <span class="matters-label" data-i18n="matters_label">Matters to me?</span>
       <div class="pill-toggle">
-        <input type="radio" name="dietary_must" id="diet_flex" value="0" checked /><label for="diet_flex">Flexible</label>
-        <input type="radio" name="dietary_must" id="diet_must" value="1" /><label for="diet_must">Deal-breaker</label>
+        <input type="radio" name="dietary_must" id="diet_flex" value="0" checked /><label for="diet_flex" data-i18n="pill_flexible">Flexible</label>
+        <input type="radio" name="dietary_must" id="diet_must" value="1" /><label for="diet_must" data-i18n="pill_dealbreaker">Deal-breaker</label>
       </div>
     </div>
   </div>
 
   <!-- Availability -->
   <div class="field">
-    <label class="field-label">When are you generally free?</label>
+    <label class="field-label" data-i18n="label_availability">When are you generally free?</label>
     <div class="day-group">
-      <input type="checkbox" name="availability" value="monday" id="day-mon" /><label for="day-mon">Mon</label>
-      <input type="checkbox" name="availability" value="tuesday" id="day-tue" /><label for="day-tue">Tue</label>
-      <input type="checkbox" name="availability" value="wednesday" id="day-wed" /><label for="day-wed">Wed</label>
-      <input type="checkbox" name="availability" value="thursday" id="day-thu" /><label for="day-thu">Thu</label>
-      <input type="checkbox" name="availability" value="friday" id="day-fri" /><label for="day-fri">Fri</label>
-      <input type="checkbox" name="availability" value="saturday" id="day-sat" /><label for="day-sat">Sat</label>
-      <input type="checkbox" name="availability" value="sunday" id="day-sun" /><label for="day-sun">Sun</label>
+      <input type="checkbox" name="availability" value="monday" id="day-mon" /><label for="day-mon" data-i18n="day_mon">Mon</label>
+      <input type="checkbox" name="availability" value="tuesday" id="day-tue" /><label for="day-tue" data-i18n="day_tue">Tue</label>
+      <input type="checkbox" name="availability" value="wednesday" id="day-wed" /><label for="day-wed" data-i18n="day_wed">Wed</label>
+      <input type="checkbox" name="availability" value="thursday" id="day-thu" /><label for="day-thu" data-i18n="day_thu">Thu</label>
+      <input type="checkbox" name="availability" value="friday" id="day-fri" /><label for="day-fri" data-i18n="day_fri">Fri</label>
+      <input type="checkbox" name="availability" value="saturday" id="day-sat" /><label for="day-sat" data-i18n="day_sat">Sat</label>
+      <input type="checkbox" name="availability" value="sunday" id="day-sun" /><label for="day-sun" data-i18n="day_sun">Sun</label>
     </div>
     <div class="matters-row">
-      <span class="matters-label">Matters to me?</span>
+      <span class="matters-label" data-i18n="matters_label">Matters to me?</span>
       <div class="pill-toggle">
-        <input type="radio" name="avail_must" id="av_flex" value="0" checked /><label for="av_flex">Flexible</label>
-        <input type="radio" name="avail_must" id="av_must" value="1" /><label for="av_must">Deal-breaker</label>
+        <input type="radio" name="avail_must" id="av_flex" value="0" checked /><label for="av_flex" data-i18n="pill_flexible">Flexible</label>
+        <input type="radio" name="avail_must" id="av_must" value="1" /><label for="av_must" data-i18n="pill_dealbreaker">Deal-breaker</label>
       </div>
     </div>
   </div>
 
   <!-- Dinner format -->
   <div class="field">
-    <label class="field-label">What kind of dinner do you prefer?</label>
+    <label class="field-label" data-i18n="label_dinner_format">What kind of dinner do you prefer?</label>
     <div class="radio-group">
-      <label class="radio-card"><input type="radio" name="dinner_format" value="hosted" /> I'd love to host and cook</label>
-      <label class="radio-card"><input type="radio" name="dinner_format" value="potluck" /> Everyone brings a dish</label>
-      <label class="radio-card"><input type="radio" name="dinner_format" value="restaurant" /> Meet at a restaurant</label>
-      <label class="radio-card"><input type="radio" name="dinner_format" value="any" checked /> No preference</label>
+      <label class="radio-card"><input type="radio" name="dinner_format" value="hosted" /> <span data-i18n="dinner_hosted">I'd love to host and cook</span></label>
+      <label class="radio-card"><input type="radio" name="dinner_format" value="potluck" /> <span data-i18n="dinner_potluck">Everyone brings a dish</span></label>
+      <label class="radio-card"><input type="radio" name="dinner_format" value="restaurant" /> <span data-i18n="dinner_restaurant">Meet at a restaurant</span></label>
+      <label class="radio-card"><input type="radio" name="dinner_format" value="any" checked /> <span data-i18n="dinner_any">No preference</span></label>
     </div>
     <div class="matters-row">
-      <span class="matters-label">Matters to me?</span>
+      <span class="matters-label" data-i18n="matters_label">Matters to me?</span>
       <div class="pill-toggle">
-        <input type="radio" name="dinner_format_must" id="dfm_flex" value="0" checked /><label for="dfm_flex">Flexible</label>
-        <input type="radio" name="dinner_format_must" id="dfm_must" value="1" /><label for="dfm_must">Deal-breaker</label>
+        <input type="radio" name="dinner_format_must" id="dfm_flex" value="0" checked /><label for="dfm_flex" data-i18n="pill_flexible">Flexible</label>
+        <input type="radio" name="dinner_format_must" id="dfm_must" value="1" /><label for="dfm_must" data-i18n="pill_dealbreaker">Deal-breaker</label>
       </div>
     </div>
   </div>
 
   <!-- Group size -->
   <div class="field">
-    <label class="field-label">Preferred group size</label>
+    <label class="field-label" data-i18n="label_group_size">Preferred group size</label>
     <div class="radio-group">
-      <label class="radio-card"><input type="radio" name="group_size_pref" value="small" /> Small - 4 to 5</label>
-      <label class="radio-card"><input type="radio" name="group_size_pref" value="medium" checked /> Medium - 6 to 8</label>
-      <label class="radio-card"><input type="radio" name="group_size_pref" value="large" /> Large - 8 to 10</label>
+      <label class="radio-card"><input type="radio" name="group_size_pref" value="small" /> <span data-i18n="size_small">Small - 4 to 5</span></label>
+      <label class="radio-card"><input type="radio" name="group_size_pref" value="medium" checked /> <span data-i18n="size_medium">Medium - 6 to 8</span></label>
+      <label class="radio-card"><input type="radio" name="group_size_pref" value="large" /> <span data-i18n="size_large">Large - 8 to 10</span></label>
     </div>
     <div class="matters-row">
-      <span class="matters-label">Matters to me?</span>
+      <span class="matters-label" data-i18n="matters_label">Matters to me?</span>
       <div class="pill-toggle">
-        <input type="radio" name="size_must" id="sz_flex" value="0" checked /><label for="sz_flex">Flexible</label>
-        <input type="radio" name="size_must" id="sz_must" value="1" /><label for="sz_must">Deal-breaker</label>
+        <input type="radio" name="size_must" id="sz_flex" value="0" checked /><label for="sz_flex" data-i18n="pill_flexible">Flexible</label>
+        <input type="radio" name="size_must" id="sz_must" value="1" /><label for="sz_must" data-i18n="pill_dealbreaker">Deal-breaker</label>
       </div>
     </div>
   </div>
 
   <!-- Date of birth → age -->
   <div class="field">
-    <label class="field-label" for="birthdate">Date of birth <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+    <label class="field-label" for="birthdate" data-i18n="label_dob">Date of birth <span style="font-weight:400;text-transform:none;letter-spacing:0" data-i18n="label_dob_optional">(optional)</span></label>
     <input type="date" id="birthdate" max="" onchange="onBirthdate()" style="max-width:220px" />
     <p id="age-hint" style="font-size:0.78rem;color:var(--muted);margin-top:0.4rem"></p>
     <div class="matters-row" id="age-matters-row" style="display:none">
-      <span class="matters-label">Age range matters to me?</span>
+      <span class="matters-label" data-i18n="matters_age">Age range matters to me?</span>
       <div class="pill-toggle">
-        <input type="radio" name="age_range_must" id="arm_flex" value="0" checked /><label for="arm_flex">Flexible</label>
-        <input type="radio" name="age_range_must" id="arm_must" value="1" /><label for="arm_must">Deal-breaker</label>
+        <input type="radio" name="age_range_must" id="arm_flex" value="0" checked /><label for="arm_flex" data-i18n="pill_flexible">Flexible</label>
+        <input type="radio" name="age_range_must" id="arm_must" value="1" /><label for="arm_must" data-i18n="pill_dealbreaker">Deal-breaker</label>
       </div>
     </div>
     <input type="hidden" id="age" />
@@ -833,7 +870,7 @@
 
   <!-- Languages -->
   <div class="field">
-    <label class="field-label">Languages you speak</label>
+    <label class="field-label" data-i18n="label_languages">Languages you speak</label>
     <div style="display:flex;gap:0.5rem">
       <select id="lang1" style="flex:1"></select>
       <select id="lang2" style="flex:1"></select>
@@ -843,19 +880,19 @@
 
   <!-- Gender group preference -->
   <div class="field">
-    <label class="field-label">Preferred group composition</label>
+    <label class="field-label" data-i18n="label_composition">Preferred group composition</label>
     <div class="radio-group" style="grid-template-columns:1fr 1fr 1fr">
       <label class="radio-card">
         <input type="radio" name="gender_pref" value="any" checked />
-        Anyone
+        <span data-i18n="comp_any">Anyone</span>
       </label>
       <label class="radio-card">
         <input type="radio" name="gender_pref" value="women" />
-        Women only
+        <span data-i18n="comp_women">Women only</span>
       </label>
       <label class="radio-card">
         <input type="radio" name="gender_pref" value="men" />
-        Men only
+        <span data-i18n="comp_men">Men only</span>
       </label>
     </div>
   </div>
@@ -863,16 +900,16 @@
   <!-- Bring a friend -->
   <div class="field">
     <button type="button" class="friend-toggle-btn" onclick="toggleFriend()">
-      <span>Signing up with someone? 🙋</span>
+      <span data-i18n="friend_toggle">Signing up with someone? 🙋</span>
       <span id="friend-arrow">▾</span>
     </button>
     <div class="friend-content" id="friend-content">
-      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem">Share this code with your plus-one - you'll always be placed in the same group.</p>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:0.75rem" data-i18n="friend_hint">Share this code with your plus-one - you'll always be placed in the same group.</p>
       <div class="code-display" id="link-code-display"></div>
-      <p class="code-hint">Your personal link code</p>
-      <button type="button" class="copy-btn" onclick="copyCode()">Copy code</button>
-      <div class="divider-or">or enter theirs</div>
-      <label class="field-label" for="partner-code" style="margin-top:0.75rem">Partner's code</label>
+      <p class="code-hint" data-i18n="friend_code_hint">Your personal link code</p>
+      <button type="button" class="copy-btn" onclick="copyCode()" data-i18n="copy_btn">Copy code</button>
+      <div class="divider-or" data-i18n="divider_or">or enter theirs</div>
+      <label class="field-label" for="partner-code" style="margin-top:0.75rem" data-i18n="label_partner_code">Partner's code</label>
       <input type="text" id="partner-code" placeholder="e.g. A3F8KL2Z" maxlength="8"
              style="text-transform:uppercase;letter-spacing:0.1em"
              oninput="this.value=this.value.toUpperCase()" />
@@ -883,20 +920,297 @@
   <div class="field" style="margin-top:0.5rem">
     <label class="checkbox-row" for="can_host" style="display:flex;align-items:center;gap:0.75rem;cursor:pointer;text-transform:none;letter-spacing:0;font-size:0.95rem;font-weight:600;color:var(--accent)">
       <input type="checkbox" id="can_host" style="width:20px;height:20px;accent-color:var(--accent);flex-shrink:0;cursor:pointer" />
-      I'm open to hosting - happy to have the group over at my place
+      <span data-i18n="host_label">I'm open to hosting - happy to have the group over at my place</span>
     </label>
   </div>
 
-  <button class="submit-btn" onclick="handleSignup()">Join the waitlist</button>
+  <button class="submit-btn" onclick="handleSignup()" data-i18n="submit_btn">Join the waitlist</button>
   <div class="form-message" id="msg"></div>
   </div><!-- /.form-card -->
 </section>
 
 <footer>
-  © 2026 Sobremesa
+  <span data-i18n="footer">© 2026 Sobremesa</span>
 </footer>
 
 <script>
+  // ── Translations ──
+  const TRANSLATIONS = {
+    en: {
+      nav_cta: 'Join the table',
+      hero_eyebrow: 'Barcelona · Coming soon',
+      hero_h1: 'Dine together to find genuine <em>connections</em> through sharing food',
+      hero_sub: 'Sobremesa brings small groups together for home-cooked dinners. No bars, no apps, no awkward networking. Just good food, a table, and time to linger.',
+      hero_cta: 'Join the table',
+      how_label: 'How it works',
+      step1_title: 'Sign up',
+      step1_desc: "Tell us where you are, when you're free, and what you eat. That's all we need.",
+      step2_title: 'We match you',
+      step2_desc: 'We put together a group of 4 to 8 people nearby who share an evening and a table.',
+      step3_title: 'Someone cooks',
+      step3_desc: 'Potluck, one big dish, or a shared spread. The host decides, the guests show up.',
+      step4_title: 'Linger a while',
+      step4_desc: "Sobremesa - the time after the meal when no one wants to leave. That's the point.",
+      form_h2: 'Get a seat at the table',
+      form_sub: "We'll reach out when your group is ready. No spam, ever.",
+      label_name: 'Your name',
+      label_email: 'Email',
+      label_city: 'Your city',
+      label_travel: 'How far are you willing to travel?',
+      label_dietary: 'Dietary needs',
+      label_availability: 'When are you generally free?',
+      label_dinner_format: 'What kind of dinner do you prefer?',
+      label_group_size: 'Preferred group size',
+      label_dob: 'Date of birth',
+      label_dob_optional: '(optional)',
+      label_languages: 'Languages you speak',
+      label_composition: 'Preferred group composition',
+      matters_label: 'Matters to me?',
+      matters_age: 'Age range matters to me?',
+      pill_flexible: 'Flexible',
+      pill_dealbreaker: 'Deal-breaker',
+      diet_none: 'No restrictions',
+      diet_vegetarian: 'Vegetarian',
+      diet_vegan: 'Vegan',
+      diet_gluten: 'Gluten-free',
+      diet_halal: 'Halal',
+      diet_no_onion: 'No onion/garlic',
+      diet_no_fish: 'No fish',
+      diet_no_seafood: 'No seafood',
+      day_mon: 'Mon',
+      day_tue: 'Tue',
+      day_wed: 'Wed',
+      day_thu: 'Thu',
+      day_fri: 'Fri',
+      day_sat: 'Sat',
+      day_sun: 'Sun',
+      dinner_hosted: "I'd love to host and cook",
+      dinner_potluck: 'Everyone brings a dish',
+      dinner_restaurant: 'Meet at a restaurant',
+      dinner_any: 'No preference',
+      size_small: 'Small - 4 to 5',
+      size_medium: 'Medium - 6 to 8',
+      size_large: 'Large - 8 to 10',
+      comp_any: 'Anyone',
+      comp_women: 'Women only',
+      comp_men: 'Men only',
+      friend_toggle: 'Signing up with someone? 🙋',
+      friend_hint: "Share this code with your plus-one - you'll always be placed in the same group.",
+      friend_code_hint: 'Your personal link code',
+      copy_btn: 'Copy code',
+      divider_or: 'or enter theirs',
+      label_partner_code: "Partner's code",
+      host_label: "I'm open to hosting - happy to have the group over at my place",
+      submit_btn: 'Join the waitlist',
+      footer: '© 2026 Sobremesa',
+      travel_labels: ['Up to 1 km', 'Up to 5 km', 'Up to 10 km', 'Up to 20 km', 'Up to 50 km'],
+      age_hint_prefix: 'Age: ',
+      saving_seat: 'Saving your seat…',
+      on_list: "You're on the list ✓",
+      err_name_email: 'Please fill in your name and email.',
+      err_dietary: 'Please select at least one dietary option.',
+      err_availability: "Please select at least one time you're free.",
+      err_generic: 'Something went wrong. Try again.',
+      err_connect: 'Could not connect. Please try again.',
+    },
+    es: {
+      nav_cta: 'Únete a la mesa',
+      hero_eyebrow: 'Barcelona · Próximamente',
+      hero_h1: 'Cenar juntos para encontrar <em>conexiones</em> genuinas a través de la comida',
+      hero_sub: 'Formamos pequeños grupos para cenas en casa. Buena comida, una mesa de verdad, tiempo para quedarse.',
+      hero_cta: 'Apúntate',
+      how_label: 'Cómo funciona',
+      step1_title: 'Te apuntas',
+      step1_desc: 'Rellena el formulario con tus preferencias de cena, disponibilidad y ubicación.',
+      step2_title: 'Te emparejamos',
+      step2_desc: 'Nuestro algoritmo forma grupos de 4-10 personas compatibles de tu zona.',
+      step3_title: 'Os juntáis',
+      step3_desc: 'Quedáis en casa de alguien o en un restaurante y disfrutáis de una cena de verdad.',
+      step4_title: 'Hacéis amigos',
+      step4_desc: 'Las mejores amistades nacen alrededor de una mesa.',
+      form_h2: 'Reserva tu sitio en la mesa',
+      form_sub: 'Tardas 2 minutos. Te avisamos cuando tu grupo esté listo.',
+      label_name: 'Tu nombre',
+      label_email: 'Email',
+      label_city: 'Tu ciudad',
+      label_travel: '¿Hasta dónde estás dispuesto/a a desplazarte?',
+      label_dietary: 'Restricciones alimentarias',
+      label_availability: '¿Cuándo sueles estar libre?',
+      label_dinner_format: '¿Qué tipo de cena prefieres?',
+      label_group_size: 'Tamaño de grupo preferido',
+      label_dob: 'Fecha de nacimiento',
+      label_dob_optional: '(opcional)',
+      label_languages: 'Idiomas que hablas',
+      label_composition: 'Composición preferida del grupo',
+      matters_label: '¿Es importante para mí?',
+      matters_age: '¿El rango de edad importa?',
+      pill_flexible: 'Flexible',
+      pill_dealbreaker: 'Imprescindible',
+      diet_none: 'Sin restricciones',
+      diet_vegetarian: 'Vegetariano/a',
+      diet_vegan: 'Vegano/a',
+      diet_gluten: 'Sin gluten',
+      diet_halal: 'Halal',
+      diet_no_onion: 'Sin cebolla/ajo',
+      diet_no_fish: 'Sin pescado',
+      diet_no_seafood: 'Sin marisco',
+      day_mon: 'Lun',
+      day_tue: 'Mar',
+      day_wed: 'Mié',
+      day_thu: 'Jue',
+      day_fri: 'Vie',
+      day_sat: 'Sáb',
+      day_sun: 'Dom',
+      dinner_hosted: 'Me encantaría ser anfitrión/a y cocinar',
+      dinner_potluck: 'Cada uno trae un plato',
+      dinner_restaurant: 'Quedar en un restaurante',
+      dinner_any: 'Sin preferencia',
+      size_small: 'Pequeño - 4 a 5',
+      size_medium: 'Mediano - 6 a 8',
+      size_large: 'Grande - 8 a 10',
+      comp_any: 'Cualquiera',
+      comp_women: 'Solo mujeres',
+      comp_men: 'Solo hombres',
+      friend_toggle: '¿Vienes con alguien? 🙋',
+      friend_hint: 'Comparte este código con tu acompañante: siempre os pondremos en el mismo grupo.',
+      friend_code_hint: 'Tu código personal',
+      copy_btn: 'Copiar código',
+      divider_or: 'o introduce el suyo',
+      label_partner_code: 'Código de tu acompañante',
+      host_label: 'Estoy abierto/a a ser anfitrión/a — me parece bien recibir al grupo en casa',
+      submit_btn: 'Apúntate a la lista de espera',
+      footer: '© 2026 Sobremesa',
+      travel_labels: ['Hasta 1 km', 'Hasta 5 km', 'Hasta 10 km', 'Hasta 20 km', 'Hasta 50 km'],
+      age_hint_prefix: 'Edad: ',
+      saving_seat: 'Guardando tu sitio…',
+      on_list: 'Estás en la lista ✓',
+      err_name_email: 'Por favor, introduce tu nombre y email.',
+      err_dietary: 'Por favor, selecciona al menos una opción alimentaria.',
+      err_availability: 'Por favor, selecciona al menos un día disponible.',
+      err_generic: 'Algo salió mal. Inténtalo de nuevo.',
+      err_connect: 'No se pudo conectar. Inténtalo de nuevo.',
+    },
+    ca: {
+      nav_cta: 'Uneix-te a la taula',
+      hero_eyebrow: 'Barcelona · Pròximament',
+      hero_h1: 'Sopar junts per trobar <em>connexions</em> genuïnes a través del menjar',
+      hero_sub: 'Formem grups petits per a sopars a casa. Bon menjar, una taula de veritat, temps per quedar-se.',
+      hero_cta: "Apunta't",
+      how_label: 'Com funciona',
+      step1_title: "T'apuntes",
+      step1_desc: "Omple el formulari amb les teves preferències de sopar, disponibilitat i ubicació.",
+      step2_title: "Et fem parella",
+      step2_desc: 'El nostre algorisme forma grups de 4-10 persones compatibles de la teva zona.',
+      step3_title: 'Us reuniu',
+      step3_desc: "Quedeu a casa d'algú o en un restaurant i gaudiu d'un sopar de veritat.",
+      step4_title: 'Feu amics',
+      step4_desc: "Les millors amistats neixen al voltant d'una taula.",
+      form_h2: 'Reserva el teu lloc a la taula',
+      form_sub: "Trigues 2 minuts. T'avisem quan el teu grup estigui llest.",
+      label_name: 'El teu nom',
+      label_email: 'Email',
+      label_city: 'La teva ciutat',
+      label_travel: 'Fins on estàs disposat/da a desplaçar-te?',
+      label_dietary: 'Necessitats alimentàries',
+      label_availability: 'Quan tens lliure generalment?',
+      label_dinner_format: 'Quin tipus de sopar prefereixes?',
+      label_group_size: 'Mida de grup preferida',
+      label_dob: 'Data de naixement',
+      label_dob_optional: '(opcional)',
+      label_languages: 'Idiomes que parles',
+      label_composition: 'Composició preferida del grup',
+      matters_label: 'És important per a mi?',
+      matters_age: 'El rang d'edat importa?',
+      pill_flexible: 'Flexible',
+      pill_dealbreaker: 'Imprescindible',
+      diet_none: 'Sense restriccions',
+      diet_vegetarian: 'Vegetarià/ana',
+      diet_vegan: 'Vegà/ana',
+      diet_gluten: 'Sense gluten',
+      diet_halal: 'Halal',
+      diet_no_onion: 'Sense ceba/all',
+      diet_no_fish: 'Sense peix',
+      diet_no_seafood: 'Sense marisc',
+      day_mon: 'Dl',
+      day_tue: 'Dt',
+      day_wed: 'Dc',
+      day_thu: 'Dj',
+      day_fri: 'Dv',
+      day_sat: 'Ds',
+      day_sun: 'Dg',
+      dinner_hosted: "M'encantaria ser amfitrió/ona i cuinar",
+      dinner_potluck: 'Cadascú porta un plat',
+      dinner_restaurant: 'Quedar en un restaurant',
+      dinner_any: 'Sense preferència',
+      size_small: 'Petit - 4 a 5',
+      size_medium: 'Mitjà - 6 a 8',
+      size_large: 'Gran - 8 a 10',
+      comp_any: 'Qualsevol',
+      comp_women: 'Només dones',
+      comp_men: 'Només homes',
+      friend_toggle: "Véns amb algú? 🙋",
+      friend_hint: "Comparteix aquest codi amb el teu acompanyant: sempre us posarem al mateix grup.",
+      friend_code_hint: 'El teu codi personal',
+      copy_btn: 'Copia el codi',
+      divider_or: 'o introdueix el seu',
+      label_partner_code: "Codi del teu acompanyant",
+      host_label: "Estic obert/a a ser amfitrió/ona — no em fa res rebre el grup a casa meva",
+      submit_btn: "Apunta't a la llista d'espera",
+      footer: '© 2026 Sobremesa',
+      travel_labels: ['Fins a 1 km', 'Fins a 5 km', 'Fins a 10 km', 'Fins a 20 km', 'Fins a 50 km'],
+      age_hint_prefix: 'Edat: ',
+      saving_seat: 'Guardant el teu lloc…',
+      on_list: 'Estàs a la llista ✓',
+      err_name_email: 'Si us plau, introdueix el teu nom i email.',
+      err_dietary: 'Si us plau, selecciona almenys una opció alimentària.',
+      err_availability: 'Si us plau, selecciona almenys un dia lliure.',
+      err_generic: 'Alguna cosa ha fallat. Torna-ho a intentar.',
+      err_connect: 'No s\'ha pogut connectar. Torna-ho a intentar.',
+    }
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'en';
+
+  function applyTranslation(lang) {
+    if (!TRANSLATIONS[lang]) return;
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+
+    const t = TRANSLATIONS[lang];
+
+    // Update all data-i18n elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (!(key in t)) return;
+      const val = t[key];
+      // Use innerHTML for keys that contain HTML tags
+      if (key === 'hero_h1') {
+        el.innerHTML = val;
+      } else {
+        el.textContent = val;
+      }
+    });
+
+    // Update active lang button
+    ['en', 'es', 'ca'].forEach(l => {
+      const btn = document.getElementById('lang-btn-' + l);
+      if (btn) btn.classList.toggle('active', l === lang);
+    });
+
+    // Update travel label
+    const travelIdx = parseInt(document.getElementById('travel-slider').value);
+    document.getElementById('travel-label').textContent = t.travel_labels[travelIdx];
+
+    // Update age hint if visible
+    const ageVal = document.getElementById('age').value;
+    if (ageVal) {
+      document.getElementById('age-hint').textContent = t.age_hint_prefix + ageVal;
+    }
+
+    populateLangDropdowns();
+  }
+
   // ── Travel slider ──
   const TRAVEL_KM = [1, 5, 10, 20, 50];
   // ── Language dropdowns ──
@@ -950,12 +1264,11 @@
       });
     });
   }
-  populateLangDropdowns();
 
-  const TRAVEL_LABELS = ['Up to 1 km', 'Up to 5 km', 'Up to 10 km', 'Up to 20 km', 'Up to 50 km'];
   function onTravelSlider() {
     const idx = parseInt(document.getElementById('travel-slider').value);
-    document.getElementById('travel-label').textContent = TRAVEL_LABELS[idx];
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS['en'];
+    document.getElementById('travel-label').textContent = t.travel_labels[idx];
     document.getElementById('max_travel_km').value = TRAVEL_KM[idx];
   }
 
@@ -963,6 +1276,7 @@
   document.getElementById('birthdate').max = new Date().toISOString().split('T')[0];
   function onBirthdate() {
     const val = document.getElementById('birthdate').value;
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS['en'];
     if (!val) {
       document.getElementById('age').value = '';
       document.getElementById('age-hint').textContent = '';
@@ -975,7 +1289,7 @@
     const m = today.getMonth() - dob.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
     document.getElementById('age').value = age;
-    document.getElementById('age-hint').textContent = `Age: ${age}`;
+    document.getElementById('age-hint').textContent = t.age_hint_prefix + age;
     document.getElementById('age-matters-row').style.display = 'flex';
   }
 
@@ -1043,10 +1357,11 @@
   }
 
   function copyCode() {
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS['en'];
     navigator.clipboard.writeText(MY_CODE).then(() => {
       const btn = document.querySelector('.copy-btn');
       btn.textContent = 'Copied!';
-      setTimeout(() => btn.textContent = 'Copy code', 1500);
+      setTimeout(() => btn.textContent = t.copy_btn, 1500);
     });
   }
 
@@ -1054,6 +1369,7 @@
   async function handleSignup() {
     const btn = document.querySelector('.submit-btn');
     const msg = document.getElementById('msg');
+    const t = TRANSLATIONS[currentLang] || TRANSLATIONS['en'];
     msg.className = 'form-message';
     msg.textContent = '';
 
@@ -1087,20 +1403,20 @@
     const gender_pref = document.querySelector('[name="gender_pref"]:checked')?.value || 'any';
 
     if (!name || !email) {
-      msg.textContent = 'Please fill in your name and email.';
+      msg.textContent = t.err_name_email;
       msg.className = 'form-message error'; return;
     }
     if (dietary.length === 0) {
-      msg.textContent = 'Please select at least one dietary option.';
+      msg.textContent = t.err_dietary;
       msg.className = 'form-message error'; return;
     }
     if (availability.length === 0) {
-      msg.textContent = 'Please select at least one time you\'re free.';
+      msg.textContent = t.err_availability;
       msg.className = 'form-message error'; return;
     }
 
     btn.disabled = true;
-    btn.textContent = 'Saving your seat…';
+    btn.textContent = t.saving_seat;
 
     try {
       const res = await fetch('/signup', {
@@ -1120,20 +1436,23 @@
       if (res.ok) {
         msg.textContent = data.message;
         msg.className = 'form-message success';
-        btn.textContent = 'You\'re on the list ✓';
+        btn.textContent = t.on_list;
       } else {
-        msg.textContent = data.detail || 'Something went wrong. Try again.';
+        msg.textContent = data.detail || t.err_generic;
         msg.className = 'form-message error';
         btn.disabled = false;
-        btn.textContent = 'Join the waitlist';
+        btn.textContent = t.submit_btn;
       }
     } catch {
-      msg.textContent = 'Could not connect. Please try again.';
+      msg.textContent = t.err_connect;
       msg.className = 'form-message error';
       btn.disabled = false;
-      btn.textContent = 'Join the waitlist';
+      btn.textContent = t.submit_btn;
     }
   }
+
+  // ── Init ──
+  applyTranslation(currentLang);
 </script>
 <script>
   if ('serviceWorker' in navigator) {
