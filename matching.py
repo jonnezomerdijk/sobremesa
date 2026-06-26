@@ -16,6 +16,7 @@ W_DINNER_FORMAT  = 4.0
 W_AGE_PROXIMITY  = 3.0
 W_GROUP_SIZE     = 2.0
 W_DISTANCE       = 5.0
+W_LANGUAGE       = 4.0
 
 
 def _parse(person: dict) -> dict:
@@ -46,6 +47,13 @@ def _parse(person: dict) -> dict:
     p.setdefault("max_travel_km", 10)
     p.setdefault("neighbourhood", "")
     p.setdefault("can_host", 0)
+    p.setdefault("gender_pref", "any")
+    if isinstance(p.get("languages"), str):
+        try:
+            p["languages"] = json.loads(p["languages"])
+        except (json.JSONDecodeError, TypeError):
+            p["languages"] = []
+    p.setdefault("languages", [])
     return p
 
 
@@ -87,6 +95,13 @@ def score_pair(a: dict, b: dict) -> float:
     if a.get("group_size_pref") == b.get("group_size_pref"):
         score += W_GROUP_SIZE
 
+    langs_a = set(a.get("languages") or [])
+    langs_b = set(b.get("languages") or [])
+    if langs_a and langs_b:
+        shared = len(langs_a & langs_b)
+        if shared > 0:
+            score += W_LANGUAGE * min(shared / max(len(langs_a), len(langs_b)), 1.0)
+
     lat_a, lng_a = a.get("lat"), a.get("lng")
     lat_b, lng_b = b.get("lat"), b.get("lng")
     if lat_a and lng_a and lat_b and lng_b:
@@ -99,6 +114,19 @@ def score_pair(a: dict, b: dict) -> float:
 
 
 def hard_constraints_compatible(candidate: dict, group: list[dict], past_pairs: set[tuple] = None) -> bool:
+    # Gender preference — if anyone in the group or the candidate has a non-"any" pref,
+    # all members including candidate must share the same gender_pref (or have "any").
+    c_gender = candidate.get("gender_pref", "any")
+    for member in group:
+        m_gender = member.get("gender_pref", "any")
+        # If either has a specific preference, it must match the other's pref or be "any"
+        if c_gender != "any" and m_gender != "any" and c_gender != m_gender:
+            return False
+        if c_gender != "any" and m_gender == "any":
+            pass  # candidate has preference, member is flexible — ok
+        if m_gender != "any" and c_gender == "any":
+            pass  # member has preference, candidate is flexible — ok
+
     # Prevent rematching
     if past_pairs:
         for member in group:
