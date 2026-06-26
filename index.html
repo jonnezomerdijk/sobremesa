@@ -723,9 +723,9 @@
   <!-- Travel distance slider -->
   <div class="field">
     <label class="field-label">How far are you willing to travel?</label>
-    <input type="range" id="travel-slider" min="0" max="3" step="1" value="1" oninput="onTravelSlider()" />
+    <input type="range" id="travel-slider" min="0" max="4" step="1" value="2" oninput="onTravelSlider()" />
     <div class="slider-ticks">
-      <span>5 km</span><span>10 km</span><span>20 km</span><span>50 km</span>
+      <span>1 km</span><span>5 km</span><span>10 km</span><span>20 km</span><span>50 km</span>
     </div>
     <p class="slider-value" id="travel-label">Up to 10 km</p>
     <input type="hidden" id="max_travel_km" value="10" />
@@ -831,6 +831,41 @@
     <input type="hidden" id="age" />
   </div>
 
+  <!-- Languages -->
+  <div class="field">
+    <label class="field-label">Languages you speak</label>
+    <div class="checkbox-group" style="grid-template-columns:1fr 1fr 1fr">
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="english" /> English</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="spanish" /> Spanish</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="catalan" /> Catalan</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="french" /> French</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="german" /> German</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="portuguese" /> Portuguese</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="dutch" /> Dutch</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="italian" /> Italian</label>
+      <label class="checkbox-label"><input type="checkbox" name="languages" value="arabic" /> Arabic</label>
+    </div>
+  </div>
+
+  <!-- Gender group preference -->
+  <div class="field">
+    <label class="field-label">Preferred group composition</label>
+    <div class="radio-group" style="grid-template-columns:1fr 1fr 1fr">
+      <label class="radio-card">
+        <input type="radio" name="gender_pref" value="any" checked />
+        Anyone
+      </label>
+      <label class="radio-card">
+        <input type="radio" name="gender_pref" value="women" />
+        Women only
+      </label>
+      <label class="radio-card">
+        <input type="radio" name="gender_pref" value="men" />
+        Men only
+      </label>
+    </div>
+  </div>
+
   <!-- Bring a friend -->
   <div class="field">
     <button type="button" class="friend-toggle-btn" onclick="toggleFriend()">
@@ -871,8 +906,8 @@
 
 <script>
   // ── Travel slider ──
-  const TRAVEL_KM = [5, 10, 20, 50];
-  const TRAVEL_LABELS = ['Up to 5 km', 'Up to 10 km', 'Up to 20 km', 'Up to 50 km'];
+  const TRAVEL_KM = [1, 5, 10, 20, 50];
+  const TRAVEL_LABELS = ['Up to 1 km', 'Up to 5 km', 'Up to 10 km', 'Up to 20 km', 'Up to 50 km'];
   function onTravelSlider() {
     const idx = parseInt(document.getElementById('travel-slider').value);
     document.getElementById('travel-label').textContent = TRAVEL_LABELS[idx];
@@ -1003,6 +1038,8 @@
     const friendOpen  = document.getElementById('friend-content').classList.contains('open');
     const link_code   = friendOpen ? (partnerCode || MY_CODE) : null;
     const can_host    = document.getElementById('can_host').checked;
+    const languages   = [...document.querySelectorAll('[name="languages"]:checked')].map(e => e.value);
+    const gender_pref = document.querySelector('[name="gender_pref"]:checked')?.value || 'any';
 
     if (!name || !email) {
       msg.textContent = 'Please fill in your name and email.';
@@ -1031,7 +1068,7 @@
           group_size_pref,
           age, age_range_pref, age_range_is_must,
           city, lat, lng, max_travel_km,
-          link_code, can_host,
+          link_code, can_host, languages, gender_pref,
         })
       });
       const data = await res.json();

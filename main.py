@@ -110,6 +110,8 @@ def init_db():
             "max_travel_km": "INTEGER DEFAULT 10",
             "link_code": "TEXT",
             "can_host": "INTEGER DEFAULT 0",
+            "languages": "TEXT DEFAULT '[]'",
+            "gender_pref": "TEXT DEFAULT 'any'",
         }
         for col, typedef in new_cols.items():
             if col not in existing:
@@ -276,6 +278,8 @@ class Signup(BaseModel):
     max_travel_km: int = 10
     link_code: Optional[str] = None
     can_host: bool = False
+    languages: list[str] = []
+    gender_pref: Literal["any", "women", "men"] = "any"
 
 
 scheduler = AsyncIOScheduler()
@@ -319,8 +323,9 @@ def signup(data: Signup):
                    (name, email, neighbourhood, dietary, availability,
                     dinner_format, dinner_format_is_must, group_size_pref,
                     age, age_range_pref, age_range_is_must,
-                    city, lat, lng, max_travel_km, link_code, can_host)
-                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    city, lat, lng, max_travel_km, link_code, can_host,
+                    languages, gender_pref)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
                 (
                     data.name, data.email, data.neighbourhood,
                     json.dumps(data.dietary), json.dumps(data.availability),
@@ -328,6 +333,7 @@ def signup(data: Signup):
                     data.age, data.age_range_pref, int(data.age_range_is_must),
                     data.city, data.lat, data.lng, data.max_travel_km,
                     data.link_code, int(data.can_host),
+                    json.dumps(data.languages), data.gender_pref,
                 )
             )
         except sqlite3.IntegrityError:
