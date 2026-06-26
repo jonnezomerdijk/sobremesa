@@ -194,8 +194,8 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 50vw;
-      max-width: 560px;
+      width: 58vw;
+      max-width: 660px;
       min-width: 280px;
       pointer-events: none;
       z-index: 0;
@@ -1063,7 +1063,7 @@
   const TRANSLATIONS = {
     en: {
       nav_cta: 'Join the table',
-      hero_eyebrow: 'Barcelona · Coming soon',
+      hero_eyebrow: 'Coming soon',
       hero_h1: 'Dine together to find genuine <em>connections</em> through sharing food',
       hero_sub: 'Sobremesa brings small groups together for home-cooked dinners. No bars, no apps, no awkward networking. Just good food, a table, and time to linger.',
       hero_cta: 'Join the table',
@@ -1146,7 +1146,7 @@
     },
     es: {
       nav_cta: 'Únete a la mesa',
-      hero_eyebrow: 'Barcelona · Próximamente',
+      hero_eyebrow: 'Próximamente',
       hero_h1: 'Cenar juntos para encontrar <em>conexiones</em> genuinas a través de la comida',
       hero_sub: 'Formamos pequeños grupos para cenas en casa. Buena comida, una mesa de verdad, tiempo para quedarse.',
       hero_cta: 'Apúntate',
@@ -1160,7 +1160,7 @@
       step4_title: 'Hacéis amigos',
       step4_desc: 'Las mejores amistades nacen alrededor de una mesa.',
       form_h2: 'Reserva tu sitio en la mesa',
-      form_sub: 'Tardas 2 minutos. Te avisamos cuando tu grupo esté listo.',
+      form_sub: 'Te avisamos cuando tu grupo esté listo. Ningún spam, nunca.',
       label_name: 'Tu nombre',
       label_email: 'Email',
       label_location: 'Tu ubicación aproximada',
@@ -1229,7 +1229,7 @@
     },
     ca: {
       nav_cta: 'Uneix-te a la taula',
-      hero_eyebrow: 'Barcelona · Pròximament',
+      hero_eyebrow: 'Pròximament',
       hero_h1: 'Sopar junts per trobar <em>connexions</em> genuïnes a través del menjar',
       hero_sub: 'Formem grups petits per a sopars a casa. Bon menjar, una taula de veritat, temps per quedar-se.',
       hero_cta: "Apunta't",
@@ -1243,7 +1243,7 @@
       step4_title: 'Feu amics',
       step4_desc: "Les millors amistats neixen al voltant d'una taula.",
       form_h2: 'Reserva el teu lloc a la taula',
-      form_sub: "Trigues 2 minuts. T'avisem quan el teu grup estigui llest.",
+      form_sub: "T'avisem quan el teu grup estigui llest. Cap spam, mai.",
       label_name: 'El teu nom',
       label_email: 'Email',
       label_location: 'La teva ubicació aproximada',
@@ -1439,8 +1439,14 @@
 
   function initMap() {
     if (_map) return;
+    const mapDefaults = {
+      en: { lat: 48.8566, lng: 2.3522, zoom: 5 },   // Europe
+      es: { lat: 40.4168, lng: -3.7038, zoom: 6 },   // Spain
+      ca: { lat: 41.7270, lng: 1.8360, zoom: 8 },    // Catalunya
+    };
+    const md = mapDefaults[currentLang] || mapDefaults.es;
     _map = L.map('location-map', { zoomControl: true, attributionControl: false })
-             .setView([41.3874, 2.1686], 13);
+             .setView([md.lat, md.lng], md.zoom);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
     }).addTo(_map);
@@ -1540,14 +1546,15 @@
   }, { threshold: 0.1 });
   _mapObserver.observe(document.getElementById('field-location'));
 
-  // Hide fixed tortilla when hero scrolls out of view
+  // Hide fixed tortilla once the how-it-works section enters view
   const _tortillaWrap = document.querySelector('.hero-image-wrap');
-  const _heroSection  = document.querySelector('.hero');
-  if (_tortillaWrap && _heroSection) {
+  const _howSection   = document.querySelector('.how');
+  if (_tortillaWrap && _howSection) {
     new IntersectionObserver((entries) => {
-      _tortillaWrap.style.opacity = entries[0].isIntersecting ? '1' : '0';
+      _tortillaWrap.style.transition = 'opacity 0.3s';
+      _tortillaWrap.style.opacity = entries[0].isIntersecting ? '0' : '1';
       _tortillaWrap.style.pointerEvents = 'none';
-    }, { threshold: 0 }).observe(_heroSection);
+    }, { threshold: 0.05 }).observe(_howSection);
   }
 
   // ── Link code ──
