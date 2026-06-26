@@ -176,7 +176,33 @@
       margin: 0 auto;
     }
 
-    .hero-inner { max-width: 700px; }
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 4rem;
+      width: 100%;
+    }
+
+    .hero-text { flex: 1; min-width: 0; }
+
+    .hero-image-wrap {
+      flex: 0 0 380px;
+      width: 380px;
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 50% 44% 52% 48% / 48% 52% 44% 50%;
+      display: block;
+      box-shadow: 0 12px 48px rgba(122,45,62,0.18);
+    }
+
+    @media (max-width: 780px) {
+      .hero-inner { flex-direction: column-reverse; gap: 2rem; }
+      .hero-image-wrap { flex: none; width: 100%; max-width: 320px; margin: 0 auto; }
+    }
 
     .eyebrow {
       font-size: 0.78rem;
@@ -762,12 +788,17 @@
 <!-- Hero -->
 <section class="hero">
   <div class="hero-inner">
-    <p class="eyebrow" data-i18n="hero_eyebrow">Barcelona · Coming soon</p>
-    <h1 data-i18n="hero_h1">Dine together to find genuine <em>connections</em> through sharing food</h1>
-    <p class="hero-sub" data-i18n="hero_sub">
-      Sobremesa brings small groups together for home-cooked dinners. No bars, no apps, no awkward networking. Just good food, a table, and time to linger.
-    </p>
-    <a href="#join" class="hero-cta" data-i18n="hero_cta">Join the table</a>
+    <div class="hero-text">
+      <p class="eyebrow" data-i18n="hero_eyebrow">Barcelona · Coming soon</p>
+      <h1 data-i18n="hero_h1">Dine together to find genuine <em>connections</em> through sharing food</h1>
+      <p class="hero-sub" data-i18n="hero_sub">
+        Sobremesa brings small groups together for home-cooked dinners. No bars, no apps, no awkward networking. Just good food, a table, and time to linger.
+      </p>
+      <a href="#join" class="hero-cta" data-i18n="hero_cta">Join the table</a>
+    </div>
+    <div class="hero-image-wrap">
+      <img src="/static/tortilla.jpeg" alt="Tortilla española" />
+    </div>
   </div>
 </section>
 
