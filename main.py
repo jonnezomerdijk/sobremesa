@@ -315,13 +315,9 @@ def _render(lang: str) -> str:
     global _HTML
     if _HTML is None:
         _HTML = Path("index.html").read_text()
-    # Inject the lang into the <html> tag and set the active flag button via a small inline script
     html = _HTML.replace('<html lang="en">', f'<html lang="{lang}">')
-    # Inject init lang so JS picks it up without localStorage
-    html = html.replace(
-        "let currentLang = localStorage.getItem('lang') || 'es';",
-        f"let currentLang = '{lang}';"
-    )
+    # Inject window.__LANG__ unconditionally so JS always picks up the right language
+    html = html.replace('</head>', f'<script>window.__LANG__="{lang}";</script></head>', 1)
     return html
 
 

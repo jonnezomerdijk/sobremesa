@@ -1227,7 +1227,7 @@
     }
   };
 
-  let currentLang = document.documentElement.lang || 'es';
+  let currentLang = (window.__LANG__ || document.documentElement.lang || 'es');
 
   function applyTranslation(lang) {
     if (!TRANSLATIONS[lang]) return;
