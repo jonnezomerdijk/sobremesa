@@ -1103,11 +1103,11 @@
       label_name: 'Tu nombre',
       label_email: 'Email',
       label_location: 'Tu ubicación aproximada',
-      location_hint: 'Pon un pin donde vives. Solo guardamos tu ubicación aproximada — compartes tu dirección con el grupo una vez emparejado.',
+      location_hint: 'Pon un pin donde vives. Solo guardamos tu ubicación aproximada - compartes tu dirección con el grupo una vez emparejado.',
       locate_btn: '📍 Usar mi ubicación',
       location_set: 'Ubicación guardada',
-      location_denied: 'Acceso denegado — toca el mapa para poner tu pin.',
-      location_unavailable: 'Geolocalización no disponible — toca el mapa para poner tu pin.',
+      location_denied: 'Acceso denegado - toca el mapa para poner tu pin.',
+      location_unavailable: 'Geolocalización no disponible - toca el mapa para poner tu pin.',
       err_location: 'Por favor, pon un pin en el mapa para indicar tu ubicación.',
       label_travel: '¿Hasta dónde estás dispuesto/a a desplazarte?',
       label_dietary: 'Restricciones alimentarias',
@@ -1153,7 +1153,7 @@
       copy_btn: 'Copiar código',
       divider_or: 'o introduce el suyo',
       label_partner_code: 'Código de tu acompañante',
-      host_label: 'Estoy abierto/a a ser anfitrión/a — me parece bien recibir al grupo en casa',
+      host_label: 'Estoy abierto/a a ser anfitrión/a - me parece bien recibir al grupo en casa',
       submit_btn: 'Apúntate a la lista de espera',
       footer: '© 2026 Sobremesa',
       travel_labels: ['Hasta 1 km', 'Hasta 5 km', 'Hasta 10 km', 'Hasta 20 km', 'Hasta 50 km'],
@@ -1186,11 +1186,11 @@
       label_name: 'El teu nom',
       label_email: 'Email',
       label_location: 'La teva ubicació aproximada',
-      location_hint: "Posa un pin on vius. Només guardem la teva ubicació aproximada — comparteixes l'adreça amb el grup un cop emparellat.",
+      location_hint: "Posa un pin on vius. Només guardem la teva ubicació aproximada - comparteixes l'adreça amb el grup un cop emparellat.",
       locate_btn: '📍 Usa la meva ubicació',
       location_set: 'Ubicació guardada',
-      location_denied: "Accés denegat — toca el mapa per posar el teu pin.",
-      location_unavailable: "Geolocalització no disponible — toca el mapa per posar el teu pin.",
+      location_denied: "Accés denegat - toca el mapa per posar el teu pin.",
+      location_unavailable: "Geolocalització no disponible - toca el mapa per posar el teu pin.",
       err_location: 'Si us plau, posa un pin al mapa per indicar la teva ubicació.',
       label_travel: 'Fins on estàs disposat/da a desplaçar-te?',
       label_dietary: 'Necessitats alimentàries',
@@ -1236,7 +1236,7 @@
       copy_btn: 'Copia el codi',
       divider_or: 'o introdueix el seu',
       label_partner_code: "Codi del teu acompanyant",
-      host_label: "Estic obert/a a ser amfitrió/ona — no em fa res rebre el grup a casa meva",
+      host_label: "Estic obert/a a ser amfitrió/ona - no em fa res rebre el grup a casa meva",
       submit_btn: "Apunta't a la llista d'espera",
       footer: '© 2026 Sobremesa',
       travel_labels: ['Fins a 1 km', 'Fins a 5 km', 'Fins a 10 km', 'Fins a 20 km', 'Fins a 50 km'],
@@ -1592,19 +1592,33 @@
     }
   }
 
+  // ── Language switcher (no reload) ──
+  const FLAGS = {
+    es: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#c60b1e"/><rect y="4" width="24" height="8" fill="#ffc400"/></svg>',
+    en: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#012169"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="3"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#c8102e" stroke-width="1.8"/><path d="M12,0 V16 M0,8 H24" stroke="#fff" stroke-width="4.5"/><path d="M12,0 V16 M0,8 H24" stroke="#c8102e" stroke-width="3"/></svg>',
+    ca: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#fcdd09"/><rect y="1.14" width="24" height="1.83" fill="#da121a"/><rect y="4.57" width="24" height="1.83" fill="#da121a"/><rect y="8" width="24" height="1.83" fill="#da121a"/><rect y="11.43" width="24" height="1.83" fill="#da121a"/><rect y="14.86" width="24" height="1.14" fill="#da121a"/></svg>',
+  };
+
+  function setLangFlag(lang) {
+    const el = document.getElementById('lang-current-flag');
+    if (el) el.innerHTML = FLAGS[lang] || FLAGS.es;
+  }
+
+  document.querySelectorAll('.lang-option').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const lang = a.getAttribute('href').replace('/', '');
+      if (!TRANSLATIONS[lang]) return;
+      history.pushState({}, '', '/' + lang);
+      applyTranslation(lang);
+      setLangFlag(lang);
+      document.getElementById('lang-dropdown').removeAttribute('open');
+    });
+  });
+
   // ── Init ──
   applyTranslation(currentLang);
-
-  // Set current flag in dropdown summary
-  (function() {
-    const FLAGS = {
-      es: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#c60b1e"/><rect y="4" width="24" height="8" fill="#ffc400"/></svg>',
-      en: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#012169"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="3"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#c8102e" stroke-width="1.8"/><path d="M12,0 V16 M0,8 H24" stroke="#fff" stroke-width="4.5"/><path d="M12,0 V16 M0,8 H24" stroke="#c8102e" stroke-width="3"/></svg>',
-      ca: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#fcdd09"/><rect y="1.14" width="24" height="1.83" fill="#da121a"/><rect y="4.57" width="24" height="1.83" fill="#da121a"/><rect y="8" width="24" height="1.83" fill="#da121a"/><rect y="11.43" width="24" height="1.83" fill="#da121a"/><rect y="14.86" width="24" height="1.14" fill="#da121a"/></svg>',
-    };
-    const el = document.getElementById('lang-current-flag');
-    if (el) el.innerHTML = FLAGS[currentLang] || FLAGS.es;
-  })();
+  setLangFlag(currentLang);
 </script>
 <script>
   if ('serviceWorker' in navigator) {
