@@ -190,13 +190,12 @@
     .hero-text { max-width: 480px; }
 
     .hero-image-wrap {
-      /* anchored to .hero section, not to text — immune to text reflow */
-      position: absolute;
-      right: 4%;
+      position: fixed;
+      right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 42vw;
-      max-width: 480px;
+      width: 50vw;
+      max-width: 560px;
       min-width: 280px;
       pointer-events: none;
       z-index: 0;
@@ -205,7 +204,7 @@
     .hero-image-wrap img {
       width: 100%;
       display: block;
-      filter: drop-shadow(0 12px 32px rgba(122,45,62,0.25));
+      filter: drop-shadow(-6px 12px 32px rgba(122,45,62,0.25));
     }
 
     @media (max-width: 780px) {
@@ -217,7 +216,6 @@
         min-width: 0;
         max-width: 320px;
         margin: 0 auto 2rem;
-        z-index: 0;
       }
       .hero-inner {
         flex-direction: column;
@@ -1541,6 +1539,16 @@
     if (entries[0].isIntersecting) { initMap(); _mapObserver.disconnect(); }
   }, { threshold: 0.1 });
   _mapObserver.observe(document.getElementById('field-location'));
+
+  // Hide fixed tortilla when hero scrolls out of view
+  const _tortillaWrap = document.querySelector('.hero-image-wrap');
+  const _heroSection  = document.querySelector('.hero');
+  if (_tortillaWrap && _heroSection) {
+    new IntersectionObserver((entries) => {
+      _tortillaWrap.style.opacity = entries[0].isIntersecting ? '1' : '0';
+      _tortillaWrap.style.pointerEvents = 'none';
+    }, { threshold: 0 }).observe(_heroSection);
+  }
 
   // ── Link code ──
   const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
