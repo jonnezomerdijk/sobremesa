@@ -27,6 +27,7 @@
       --muted-on-blue: rgba(143,175,107,0.75);
       --muted: #9A7A7A;
       --border: #D9C99A;
+      --green: #8FAF6B;
       --success: #6A9E4F;
       --error: #C4555A;
     }
@@ -60,7 +61,7 @@
       align-items: center;
       gap: 0;
       text-decoration: none;
-      color: var(--accent);
+      color: var(--green);
     }
 
     .logo-text {
@@ -81,14 +82,14 @@
       font-family: 'Fredoka One', sans-serif;
       font-size: 1rem;
       letter-spacing: 0.04em;
-      color: var(--accent);
+      color: var(--green);
       text-decoration: none;
-      background: rgba(122,45,62,0.1);
+      background: rgba(143,175,107,0.15);
       padding: 0.4rem 1.1rem;
       border-radius: 999px;
       transition: background 0.15s;
     }
-    nav a.cta-nav:hover { background: rgba(122,45,62,0.2); }
+    nav a.cta-nav:hover { background: rgba(143,175,107,0.28); }
 
     /* ── Hero ── */
     .hero {
@@ -278,7 +279,7 @@
       background: var(--surface-tint);
       font-family: 'Nunito', sans-serif;
       font-size: 0.95rem;
-      color: var(--ink);
+      color: var(--muted);
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
       border-radius: 14px;
@@ -359,7 +360,7 @@
       font-weight: 600;
       letter-spacing: 0;
       text-transform: none;
-      color: var(--ink);
+      color: var(--muted);
       cursor: pointer;
     }
 
@@ -389,7 +390,7 @@
       cursor: pointer;
       font-size: 0.88rem;
       font-weight: 600;
-      color: var(--ink);
+      color: var(--muted);
       text-transform: none;
       letter-spacing: 0;
       transition: border-color 0.15s, background 0.15s;
@@ -536,7 +537,7 @@
       font-size: 1.9rem;
       font-weight: 400;
       letter-spacing: 0.14em;
-      color: var(--accent);
+      color: var(--muted);
       margin: 0.5rem 0 0.25rem;
     }
 
@@ -633,15 +634,15 @@
   <a href="/" class="logo">
     <span class="logo-text" style="letter-spacing:0">S</span><span class="logo-plate" aria-label="o" style="margin:0 1px"><svg width="34" height="26" viewBox="0 0 34 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <!-- fork (left of plate) -->
-        <line x1="3" y1="6" x2="3" y2="11" stroke="#7A2D3E" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="5" y1="6" x2="5" y2="11" stroke="#7A2D3E" stroke-width="1.3" stroke-linecap="round"/>
-        <line x1="4" y1="11" x2="4" y2="20" stroke="#7A2D3E" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="6" x2="3" y2="11" stroke="#8FAF6B" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="5" y1="6" x2="5" y2="11" stroke="#8FAF6B" stroke-width="1.3" stroke-linecap="round"/>
+        <line x1="4" y1="11" x2="4" y2="20" stroke="#8FAF6B" stroke-width="1.5" stroke-linecap="round"/>
         <!-- plate (solid orange circle) -->
-        <circle cx="17" cy="13" r="10" fill="#7A2D3E"/>
-        <circle cx="17" cy="13" r="6.5" fill="#5C1A28" opacity="0.35"/>
+        <circle cx="17" cy="13" r="10" fill="#8FAF6B"/>
+        <circle cx="17" cy="13" r="6.5" fill="#6A9040" opacity="0.35"/>
         <!-- knife (right of plate) -->
-        <line x1="30" y1="6" x2="30" y2="20" stroke="#7A2D3E" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M30 6 C32.5 6 33 8 30 10" stroke="#7A2D3E" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+        <line x1="30" y1="6" x2="30" y2="20" stroke="#8FAF6B" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M30 6 C32.5 6 33 8 30 10" stroke="#8FAF6B" stroke-width="1.3" fill="none" stroke-linecap="round"/>
       </svg></span><span class="logo-text" style="letter-spacing:0">bremesa</span>
   </a>
   <a href="#join" class="cta-nav">Join the table</a>
