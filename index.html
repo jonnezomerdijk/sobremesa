@@ -367,29 +367,60 @@
       background: var(--surface);
     }
 
-    /* City autocomplete */
-    .city-wrap { position: relative; }
-    .city-suggestions {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0; right: 0;
-      background: var(--surface);
+    /* Neighbourhood district picker */
+    .field-hint { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .neighbourhood-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    .neighbourhood-pills input[type="radio"] { display: none; }
+    .neighbourhood-pills label {
+      display: inline-block;
+      padding: 0.45rem 1rem;
       border: 2px solid var(--border);
-      border-radius: 14px;
-      box-shadow: 0 4px 20px rgba(100,80,80,0.08);
-      z-index: 50;
-      overflow: hidden;
-      display: none;
-    }
-    .city-suggestions.open { display: block; }
-    .city-suggestion {
-      padding: 0.65rem 1.1rem;
-      font-size: 0.9rem;
+      border-radius: 999px;
+      background: var(--surface-tint);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
       cursor: pointer;
-      transition: background 0.1s;
-      font-family: 'Nunito', sans-serif;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
-    .city-suggestion:hover, .city-suggestion.active { background: var(--surface-tint); }
+    .neighbourhood-pills input[type="radio"]:checked + label {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .district-map-wrap {
+      margin-bottom: 1rem;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--border);
+      background: var(--surface-tint);
+      max-width: 280px;
+    }
+    #district-map { display: block; width: 100%; height: auto; }
+    #district-map .dpath {
+      fill: var(--surface-tint);
+      stroke: var(--border);
+      stroke-width: 1.5;
+      transition: fill 0.2s;
+    }
+    #district-map .dpath.selected {
+      fill: var(--accent-light);
+      stroke: var(--accent);
+    }
+    #travel-circle {
+      fill: rgba(122,45,62,0.08);
+      stroke: var(--accent);
+      stroke-dasharray: 4 3;
+      stroke-width: 1.5;
+      display: none;
+      pointer-events: none;
+    }
+    @media (max-width: 600px) { .district-map-wrap { display: none; } }
 
     /* Day-of-week pills */
     .day-group {
@@ -802,17 +833,58 @@
     <input type="email" id="email" placeholder="elena@example.com" required />
   </div>
 
-  <!-- City autocomplete -->
-  <div class="field">
-    <label class="field-label" for="city-input" data-i18n="label_city">Your city</label>
-    <div class="city-wrap">
-      <input type="text" id="city-input" placeholder="Start typing a city…" autocomplete="off" oninput="onCityInput()" onkeydown="onCityKey(event)" />
-      <input type="hidden" id="city" />
-      <input type="hidden" id="lat" />
-      <input type="hidden" id="lng" />
-      <div class="city-suggestions" id="city-suggestions"></div>
+  <!-- Neighbourhood district picker -->
+  <div class="field" id="field-neighbourhood">
+    <label class="field-label" data-i18n="label_neighbourhood">Your neighbourhood</label>
+    <p class="field-hint" data-i18n="neighbourhood_hint">Pick the area closest to you — we never see your exact address.</p>
+
+    <!-- Decorative SVG schematic of Barcelona districts -->
+    <div class="district-map-wrap" aria-hidden="true">
+      <svg id="district-map" viewBox="0 0 300 260" xmlns="http://www.w3.org/2000/svg">
+        <!-- Approximate schematic polygons for Barcelona's 10 districts -->
+        <!-- 1: Ciutat Vella (Old Town) - bottom center -->
+        <polygon id="dmap-1" class="dpath" points="148,195 168,195 172,210 165,225 148,228 140,215 143,200"/>
+        <!-- 2: Eixample - center -->
+        <polygon id="dmap-2" class="dpath" points="118,148 175,148 178,192 148,195 143,200 118,190"/>
+        <!-- 3: Sants-Montjuïc - bottom left -->
+        <polygon id="dmap-3" class="dpath" points="62,170 118,170 118,190 118,148 95,148 68,155"/>
+        <!-- 4: Les Corts - left center -->
+        <polygon id="dmap-4" class="dpath" points="55,118 95,118 95,148 62,148 55,135"/>
+        <!-- 5: Sarrià-Sant Gervasi - top left -->
+        <polygon id="dmap-5" class="dpath" points="55,55 105,55 105,118 55,118"/>
+        <!-- 6: Gràcia - top center -->
+        <polygon id="dmap-6" class="dpath" points="105,80 155,80 158,118 175,148 118,148 105,118"/>
+        <!-- 7: Horta-Guinardó - top right -->
+        <polygon id="dmap-7" class="dpath" points="155,55 215,55 220,100 195,130 175,148 158,118 155,80"/>
+        <!-- 8: Nou Barris - far top right -->
+        <polygon id="dmap-8" class="dpath" points="175,20 240,20 245,55 215,55 195,80 178,65"/>
+        <!-- 9: Sant Andreu - right center top -->
+        <polygon id="dmap-9" class="dpath" points="215,55 245,55 248,120 225,135 195,130 220,100"/>
+        <!-- 10: Sant Martí (Poblenou) - right -->
+        <polygon id="dmap-10" class="dpath" points="175,148 195,130 225,135 248,120 252,175 240,210 195,215 172,210 178,192"/>
+        <!-- Travel radius circle (updated by JS) -->
+        <circle id="travel-circle" cx="0" cy="0" r="0"/>
+      </svg>
     </div>
-    <p style="font-size:0.78rem;color:var(--muted);margin-top:0.4rem" id="location-hint"></p>
+
+    <!-- Primary input: radio pill group -->
+    <div class="neighbourhood-pills" role="radiogroup" aria-label="District">
+      <input type="radio" name="district" id="d1" value="1" onchange="onDistrictSelect(1)" /><label for="d1" data-i18n="district_1">Old Town / Gothic</label>
+      <input type="radio" name="district" id="d2" value="2" onchange="onDistrictSelect(2)" /><label for="d2" data-i18n="district_2">Eixample</label>
+      <input type="radio" name="district" id="d3" value="3" onchange="onDistrictSelect(3)" /><label for="d3" data-i18n="district_3">Sants / Montjuïc</label>
+      <input type="radio" name="district" id="d4" value="4" onchange="onDistrictSelect(4)" /><label for="d4" data-i18n="district_4">Les Corts</label>
+      <input type="radio" name="district" id="d5" value="5" onchange="onDistrictSelect(5)" /><label for="d5" data-i18n="district_5">Sarrià</label>
+      <input type="radio" name="district" id="d6" value="6" onchange="onDistrictSelect(6)" /><label for="d6" data-i18n="district_6">Gràcia</label>
+      <input type="radio" name="district" id="d7" value="7" onchange="onDistrictSelect(7)" /><label for="d7" data-i18n="district_7">Horta / Guinardó</label>
+      <input type="radio" name="district" id="d8" value="8" onchange="onDistrictSelect(8)" /><label for="d8" data-i18n="district_8">Nou Barris</label>
+      <input type="radio" name="district" id="d9" value="9" onchange="onDistrictSelect(9)" /><label for="d9" data-i18n="district_9">Sant Andreu</label>
+      <input type="radio" name="district" id="d10" value="10" onchange="onDistrictSelect(10)" /><label for="d10" data-i18n="district_10">Poblenou</label>
+    </div>
+
+    <!-- Hidden fields read by handleSignup (same IDs as before) -->
+    <input type="hidden" id="neighbourhood" />
+    <input type="hidden" id="lat" />
+    <input type="hidden" id="lng" />
   </div>
 
   <!-- Travel distance slider -->
@@ -1013,7 +1085,18 @@
       form_sub: "We'll reach out when your group is ready. No spam, ever.",
       label_name: 'Your name',
       label_email: 'Email',
-      label_city: 'Your city',
+      label_neighbourhood: 'Your neighbourhood',
+      neighbourhood_hint: 'Pick the area closest to you — we never see your exact address.',
+      district_1: 'Old Town / Gothic',
+      district_2: 'Eixample',
+      district_3: 'Sants / Montjuïc',
+      district_4: 'Les Corts',
+      district_5: 'Sarrià',
+      district_6: 'Gràcia',
+      district_7: 'Horta / Guinardó',
+      district_8: 'Nou Barris',
+      district_9: 'Sant Andreu',
+      district_10: 'Poblenou',
       label_travel: 'How far are you willing to travel?',
       label_dietary: 'Dietary needs',
       label_availability: 'When are you generally free?',
@@ -1066,6 +1149,7 @@
       saving_seat: 'Saving your seat…',
       on_list: "You're on the list ✓",
       err_name_email: 'Please fill in your name and email.',
+      err_neighbourhood: 'Please select your neighbourhood.',
       err_dietary: 'Please select at least one dietary option.',
       err_availability: "Please select at least one time you're free.",
       err_generic: 'Something went wrong. Try again.',
@@ -1090,7 +1174,18 @@
       form_sub: 'Tardas 2 minutos. Te avisamos cuando tu grupo esté listo.',
       label_name: 'Tu nombre',
       label_email: 'Email',
-      label_city: 'Tu ciudad',
+      label_neighbourhood: 'Tu barrio',
+      neighbourhood_hint: 'Elige la zona más cercana a donde vives — nunca vemos tu dirección exacta.',
+      district_1: 'Casco Antiguo',
+      district_2: 'Ensanche',
+      district_3: 'Sants / Montjuïc',
+      district_4: 'Les Corts',
+      district_5: 'Sarrià',
+      district_6: 'Gracia',
+      district_7: 'Horta / Guinardó',
+      district_8: 'Nou Barris',
+      district_9: 'Sant Andreu',
+      district_10: 'Sant Martí / Poblenou',
       label_travel: '¿Hasta dónde estás dispuesto/a a desplazarte?',
       label_dietary: 'Restricciones alimentarias',
       label_availability: '¿Cuándo sueles estar libre?',
@@ -1143,6 +1238,7 @@
       saving_seat: 'Guardando tu sitio…',
       on_list: 'Estás en la lista ✓',
       err_name_email: 'Por favor, introduce tu nombre y email.',
+      err_neighbourhood: 'Por favor, selecciona tu barrio.',
       err_dietary: 'Por favor, selecciona al menos una opción alimentaria.',
       err_availability: 'Por favor, selecciona al menos un día disponible.',
       err_generic: 'Algo salió mal. Inténtalo de nuevo.',
@@ -1167,7 +1263,18 @@
       form_sub: "Trigues 2 minuts. T'avisem quan el teu grup estigui llest.",
       label_name: 'El teu nom',
       label_email: 'Email',
-      label_city: 'La teva ciutat',
+      label_neighbourhood: 'El teu barri',
+      neighbourhood_hint: "Tria la zona més propera a on vius — mai veiem la teva adreça exacta.",
+      district_1: 'Ciutat Vella',
+      district_2: 'Eixample',
+      district_3: 'Sants-Montjuïc',
+      district_4: 'Les Corts',
+      district_5: 'Sarrià-Sant Gervasi',
+      district_6: 'Gràcia',
+      district_7: 'Horta-Guinardó',
+      district_8: 'Nou Barris',
+      district_9: 'Sant Andreu',
+      district_10: 'Sant Martí',
       label_travel: 'Fins on estàs disposat/da a desplaçar-te?',
       label_dietary: 'Necessitats alimentàries',
       label_availability: 'Quan tens lliure generalment?',
@@ -1220,6 +1327,7 @@
       saving_seat: 'Guardant el teu lloc…',
       on_list: 'Estàs a la llista ✓',
       err_name_email: 'Si us plau, introdueix el teu nom i email.',
+      err_neighbourhood: 'Si us plau, selecciona el teu barri.',
       err_dietary: 'Si us plau, selecciona almenys una opció alimentària.',
       err_availability: 'Si us plau, selecciona almenys un dia lliure.',
       err_generic: 'Alguna cosa ha fallat. Torna-ho a intentar.',
@@ -1259,6 +1367,12 @@
     const ageVal = document.getElementById('age').value;
     if (ageVal) {
       document.getElementById('age-hint').textContent = t.age_hint_prefix + ageVal;
+    }
+
+    // Update hidden neighbourhood value to match new language
+    if (_selectedDistrictId) {
+      const d = DISTRICTS.find(x => x.id === _selectedDistrictId);
+      if (d) document.getElementById('neighbourhood').value = d['name_' + lang] || d.name_en;
     }
 
     populateLangDropdowns();
@@ -1323,6 +1437,10 @@
     const t = TRANSLATIONS[currentLang] || TRANSLATIONS['en'];
     document.getElementById('travel-label').textContent = t.travel_labels[idx];
     document.getElementById('max_travel_km').value = TRAVEL_KM[idx];
+    if (_selectedDistrictId) {
+      const d = DISTRICTS.find(x => x.id === _selectedDistrictId);
+      if (d) updateTravelCircle(d.lat, d.lng);
+    }
   }
 
   // ── Birthdate → age ──
@@ -1346,54 +1464,48 @@
     document.getElementById('age-matters-row').style.display = 'flex';
   }
 
-  // ── City autocomplete (Nominatim) ──
-  let cityTimer, cityResults = [], citySelected = -1;
+  // ── District picker ──
+  const DISTRICTS = [
+    { id:1,  name_en:'Old Town / Gothic', name_es:'Casco Antiguo',          name_ca:'Ciutat Vella',        lat:41.3825, lng:2.1769 },
+    { id:2,  name_en:'Eixample',          name_es:'Ensanche',                name_ca:'Eixample',             lat:41.3927, lng:2.1540 },
+    { id:3,  name_en:'Sants / Montjuïc',  name_es:'Sants / Montjuïc',       name_ca:'Sants-Montjuïc',      lat:41.3720, lng:2.1460 },
+    { id:4,  name_en:'Les Corts',         name_es:'Les Corts',               name_ca:'Les Corts',            lat:41.3841, lng:2.1279 },
+    { id:5,  name_en:'Sarrià',            name_es:'Sarrià',                  name_ca:'Sarrià-Sant Gervasi',  lat:41.4036, lng:2.1273 },
+    { id:6,  name_en:'Gràcia',            name_es:'Gracia',                  name_ca:'Gràcia',               lat:41.4034, lng:2.1565 },
+    { id:7,  name_en:'Horta / Guinardó',  name_es:'Horta / Guinardó',       name_ca:'Horta-Guinardó',       lat:41.4201, lng:2.1681 },
+    { id:8,  name_en:'Nou Barris',        name_es:'Nou Barris',              name_ca:'Nou Barris',           lat:41.4385, lng:2.1762 },
+    { id:9,  name_en:'Sant Andreu',       name_es:'Sant Andreu',             name_ca:'Sant Andreu',          lat:41.4334, lng:2.1903 },
+    { id:10, name_en:'Poblenou',          name_es:'Sant Martí / Poblenou',   name_ca:'Sant Martí',           lat:41.4107, lng:2.2039 },
+  ];
 
-  function onCityInput() {
-    clearTimeout(cityTimer);
-    const q = document.getElementById('city-input').value.trim();
-    const box = document.getElementById('city-suggestions');
-    if (q.length < 2) { box.classList.remove('open'); box.innerHTML = ''; return; }
-    cityTimer = setTimeout(async () => {
-      try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&featuretype=city,town,village`
-        );
-        const data = await res.json();
-        cityResults = data;
-        citySelected = -1;
-        box.innerHTML = data.map((r, i) =>
-          `<div class="city-suggestion" data-i="${i}" onmousedown="selectCity(${i})">${r.display_name.split(',').slice(0,3).join(', ')}</div>`
-        ).join('');
-        box.classList.toggle('open', data.length > 0);
-      } catch {}
-    }, 350);
+  let _selectedDistrictId = null;
+
+  function onDistrictSelect(id) {
+    const d = DISTRICTS.find(x => x.id === id);
+    if (!d) return;
+    _selectedDistrictId = id;
+    document.getElementById('neighbourhood').value = d['name_' + currentLang] || d.name_en;
+    document.getElementById('lat').value = d.lat;
+    document.getElementById('lng').value = d.lng;
+    document.querySelectorAll('#district-map .dpath').forEach(p => p.classList.remove('selected'));
+    const svgPath = document.getElementById('dmap-' + id);
+    if (svgPath) svgPath.classList.add('selected');
+    updateTravelCircle(d.lat, d.lng);
   }
 
-  function selectCity(i) {
-    const r = cityResults[i];
-    const label = r.display_name.split(',').slice(0,2).join(', ');
-    document.getElementById('city-input').value = label;
-    document.getElementById('city').value = label;
-    document.getElementById('lat').value = r.lat;
-    document.getElementById('lng').value = r.lon;
-    document.getElementById('location-hint').textContent = '📍 ' + label;
-    document.getElementById('city-suggestions').classList.remove('open');
+  function updateTravelCircle(lat, lng) {
+    const circle = document.getElementById('travel-circle');
+    if (!circle) return;
+    const km = parseInt(document.getElementById('max_travel_km').value) || 10;
+    // Barcelona spans ~15 km N-S in 260px of the SVG viewBox
+    const PX_PER_KM = 260 / 15;
+    const cx = (lng - 2.07) / (2.23 - 2.07) * 300;
+    const cy = (1 - (lat - 41.33) / (41.47 - 41.33)) * 260;
+    circle.setAttribute('cx', cx);
+    circle.setAttribute('cy', cy);
+    circle.setAttribute('r', km * PX_PER_KM);
+    circle.style.display = 'block';
   }
-
-  function onCityKey(e) {
-    const items = document.querySelectorAll('.city-suggestion');
-    if (!items.length) return;
-    if (e.key === 'ArrowDown') { citySelected = Math.min(citySelected + 1, items.length - 1); }
-    else if (e.key === 'ArrowUp') { citySelected = Math.max(citySelected - 1, 0); }
-    else if (e.key === 'Enter' && citySelected >= 0) { e.preventDefault(); selectCity(citySelected); return; }
-    else return;
-    items.forEach((el, i) => el.classList.toggle('active', i === citySelected));
-  }
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.city-wrap')) document.getElementById('city-suggestions').classList.remove('open');
-  });
 
   // ── Link code ──
   const CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -1426,10 +1538,10 @@
     msg.className = 'form-message';
     msg.textContent = '';
 
-    const name     = document.getElementById('name').value.trim();
-    const email    = document.getElementById('email').value.trim();
-    const city     = document.getElementById('city').value.trim() || document.getElementById('city-input').value.trim() || null;
-    const latVal   = document.getElementById('lat').value;
+    const name          = document.getElementById('name').value.trim();
+    const email         = document.getElementById('email').value.trim();
+    const neighbourhood = document.getElementById('neighbourhood').value.trim() || null;
+    const latVal        = document.getElementById('lat').value;
     const lngVal   = document.getElementById('lng').value;
     const lat      = latVal ? parseFloat(latVal) : null;
     const lng      = lngVal ? parseFloat(lngVal) : null;
@@ -1459,6 +1571,10 @@
       msg.textContent = t.err_name_email;
       msg.className = 'form-message error'; return;
     }
+    if (!neighbourhood) {
+      msg.textContent = t.err_neighbourhood;
+      msg.className = 'form-message error'; return;
+    }
     if (dietary.length === 0) {
       msg.textContent = t.err_dietary;
       msg.className = 'form-message error'; return;
@@ -1476,12 +1592,12 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          name, email, neighbourhood: city || 'Other',
+          name, email, neighbourhood,
           dietary, availability,
           dinner_format, dinner_format_is_must,
           group_size_pref,
           age, age_range_pref, age_range_is_must,
-          city, lat, lng, max_travel_km,
+          lat, lng, max_travel_km,
           link_code, can_host, languages, gender_pref,
         })
       });
