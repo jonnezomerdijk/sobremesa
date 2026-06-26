@@ -1551,12 +1551,15 @@
   const _howSection   = document.querySelector('.how');
   if (_tortillaWrap && _howSection) {
     function _clipTortilla() {
-      const howTop = _howSection.getBoundingClientRect().top;
-      const vh = window.innerHeight;
-      // howTop in viewport coords: when positive, line is below viewport bottom
-      // clip the tortilla to everything above that line
-      const clipBottom = Math.min(Math.max(howTop, 0), vh);
-      _tortillaWrap.style.clipPath = `inset(0 0 ${vh - clipBottom}px 0)`;
+      const howTop  = _howSection.getBoundingClientRect().top;
+      const wrapTop = _tortillaWrap.getBoundingClientRect().top;
+      const wrapH   = _tortillaWrap.getBoundingClientRect().height;
+      // howTop relative to the wrap's own top edge
+      const clipLineFromWrapTop = howTop - wrapTop;
+      // clip everything below that line; clamp so we never over-clip
+      const clipBottom = wrapH - Math.min(Math.max(clipLineFromWrapTop, 0), wrapH);
+      // negative left/right inset gives the drop-shadow room to breathe
+      _tortillaWrap.style.clipPath = `inset(0 -60px ${clipBottom}px -60px)`;
     }
     window.addEventListener('scroll', _clipTortilla, { passive: true });
     window.addEventListener('resize', _clipTortilla, { passive: true });
