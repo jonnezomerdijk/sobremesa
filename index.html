@@ -1559,7 +1559,7 @@
       // clip everything below that line; clamp so we never over-clip
       const clipBottom = wrapH - Math.min(Math.max(clipLineFromWrapTop, 0), wrapH);
       // negative left/right inset gives the drop-shadow room to breathe
-      _tortillaWrap.style.clipPath = `inset(0 -60px ${clipBottom}px -120px)`;
+      _tortillaWrap.style.clipPath = `inset(0 -60px ${clipBottom}px -50vw)`;
     }
     window.addEventListener('scroll', _clipTortilla, { passive: true });
     window.addEventListener('resize', _clipTortilla, { passive: true });
