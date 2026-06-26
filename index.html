@@ -1546,15 +1546,15 @@
   }, { threshold: 0.1 });
   _mapObserver.observe(document.getElementById('field-location'));
 
-  // Hide fixed tortilla once the how-it-works section enters view
+  // Show tortilla only while hero is in view, hide for everything below
   const _tortillaWrap = document.querySelector('.hero-image-wrap');
-  const _howSection   = document.querySelector('.how');
-  if (_tortillaWrap && _howSection) {
+  const _heroSection  = document.querySelector('.hero');
+  if (_tortillaWrap && _heroSection) {
+    _tortillaWrap.style.transition = 'opacity 0.3s';
     new IntersectionObserver((entries) => {
-      _tortillaWrap.style.transition = 'opacity 0.3s';
-      _tortillaWrap.style.opacity = entries[0].isIntersecting ? '0' : '1';
+      _tortillaWrap.style.opacity = entries[0].isIntersecting ? '1' : '0';
       _tortillaWrap.style.pointerEvents = 'none';
-    }, { threshold: 0.05 }).observe(_howSection);
+    }, { threshold: 0.15 }).observe(_heroSection);
   }
 
   // ── Link code ──
