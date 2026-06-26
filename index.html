@@ -186,22 +186,26 @@
     .hero-text { flex: 1; min-width: 0; }
 
     .hero-image-wrap {
-      flex: 0 0 380px;
-      width: 380px;
+      flex: 0 0 460px;
+      position: relative;
+      /* let the tortilla bleed out on both sides intentionally */
+      margin-right: -3rem;
+      margin-left: -1rem;
     }
 
     .hero-image-wrap img {
       width: 100%;
-      aspect-ratio: 1;
-      object-fit: cover;
-      border-radius: 50% 44% 52% 48% / 48% 52% 44% 50%;
       display: block;
-      box-shadow: 0 12px 48px rgba(122,45,62,0.18);
+      /* subtle drop shadow that works on the transparent PNG */
+      filter: drop-shadow(0 16px 40px rgba(122,45,62,0.22));
     }
 
     @media (max-width: 780px) {
-      .hero-inner { flex-direction: column-reverse; gap: 2rem; }
-      .hero-image-wrap { flex: none; width: 100%; max-width: 320px; margin: 0 auto; }
+      .hero-inner { flex-direction: column-reverse; gap: 1rem; }
+      .hero-image-wrap {
+        flex: none; width: calc(100% + 4rem);
+        margin: 0 -2rem -1rem;
+      }
     }
 
     .eyebrow {
@@ -797,7 +801,7 @@
       <a href="#join" class="hero-cta" data-i18n="hero_cta">Join the table</a>
     </div>
     <div class="hero-image-wrap">
-      <img src="/static/tortilla.jpeg" alt="Tortilla española" />
+      <img src="/static/tortilla.png" alt="Tortilla española" />
     </div>
   </div>
 </section>
