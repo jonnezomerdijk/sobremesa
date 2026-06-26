@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, Depends, WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr
 from typing import Optional, Literal
@@ -309,9 +309,32 @@ async def shutdown():
     scheduler.shutdown()
 
 
-@app.get("/", response_class=HTMLResponse)
+_HTML = None
+
+def _render(lang: str) -> str:
+    global _HTML
+    if _HTML is None:
+        _HTML = Path("index.html").read_text()
+    # Inject the lang into the <html> tag and set the active flag button via a small inline script
+    html = _HTML.replace('<html lang="en">', f'<html lang="{lang}">')
+    # Inject init lang so JS picks it up without localStorage
+    html = html.replace(
+        "let currentLang = localStorage.getItem('lang') || 'es';",
+        f"let currentLang = '{lang}';"
+    )
+    return html
+
+
+@app.get("/", response_class=RedirectResponse)
 def index():
-    return Path("index.html").read_text()
+    return RedirectResponse(url="/es", status_code=302)
+
+
+@app.get("/{lang}", response_class=HTMLResponse)
+def index_lang(lang: str):
+    if lang not in ("en", "es", "ca"):
+        raise HTTPException(status_code=404)
+    return _render(lang)
 
 
 @app.post("/signup")

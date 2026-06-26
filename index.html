@@ -99,25 +99,50 @@
       gap: 0.75rem;
     }
 
-    .lang-switcher {
-      display: flex;
-      align-items: center;
-      gap: 0.2rem;
+    .lang-dropdown {
+      position: relative;
       flex-shrink: 0;
     }
-    .lang-btn {
-      background: transparent;
-      border: 2px solid transparent;
-      border-radius: 4px;
-      padding: 2px;
+    .lang-dropdown summary {
+      list-style: none;
       cursor: pointer;
-      opacity: 0.55;
-      transition: opacity 0.15s, border-color 0.15s;
       display: flex;
       align-items: center;
+      padding: 4px 6px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(122,45,62,0.15);
+      transition: background 0.15s;
     }
-    .lang-btn:hover { opacity: 1; }
-    .lang-btn.active { opacity: 1; border-color: rgba(122,45,62,0.4); }
+    .lang-dropdown summary::-webkit-details-marker { display: none; }
+    .lang-dropdown summary:hover { background: rgba(255,255,255,0.85); }
+    .lang-dropdown summary svg { display: block; border-radius: 2px; }
+    .lang-options {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: rgba(255,253,240,0.97);
+      border: 1px solid rgba(122,45,62,0.15);
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(80,40,40,0.12);
+      overflow: hidden;
+      min-width: 130px;
+      z-index: 200;
+    }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0.8rem;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: background 0.12s;
+    }
+    .lang-option:hover { background: rgba(122,45,62,0.07); }
+    .lang-option svg { border-radius: 2px; flex-shrink: 0; }
 
     /* ── Hero ── */
     .hero {
@@ -674,36 +699,25 @@
       </svg></span><span class="logo-text" style="letter-spacing:0">bremesa</span>
   </a>
   <div class="nav-right">
-    <div class="lang-switcher">
-      <!-- Spain -->
-      <button class="lang-btn" id="lang-btn-es" title="Español" onclick="applyTranslation('es')">
-        <svg width="24" height="16" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
-          <rect width="24" height="16" fill="#c60b1e"/>
-          <rect y="4" width="24" height="8" fill="#ffc400"/>
-        </svg>
-      </button>
-      <!-- UK -->
-      <button class="lang-btn" id="lang-btn-en" title="English" onclick="applyTranslation('en')">
-        <svg width="24" height="16" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
-          <rect width="24" height="16" fill="#012169"/>
-          <path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="3"/>
-          <path d="M0,0 L24,16 M24,0 L0,16" stroke="#c8102e" stroke-width="1.8"/>
-          <path d="M12,0 V16 M0,8 H24" stroke="#fff" stroke-width="4.5"/>
-          <path d="M12,0 V16 M0,8 H24" stroke="#c8102e" stroke-width="3"/>
-        </svg>
-      </button>
-      <!-- Catalonia -->
-      <button class="lang-btn" id="lang-btn-ca" title="Català" onclick="applyTranslation('ca')">
-        <svg width="24" height="16" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
-          <rect width="24" height="16" fill="#fcdd09"/>
-          <rect y="1.14" width="24" height="1.83" fill="#da121a"/>
-          <rect y="4.57" width="24" height="1.83" fill="#da121a"/>
-          <rect y="8" width="24" height="1.83" fill="#da121a"/>
-          <rect y="11.43" width="24" height="1.83" fill="#da121a"/>
-          <rect y="14.86" width="24" height="1.14" fill="#da121a"/>
-        </svg>
-      </button>
-    </div>
+    <details class="lang-dropdown" id="lang-dropdown">
+      <summary class="lang-current" id="lang-current-flag">
+        <!-- filled by JS -->
+      </summary>
+      <div class="lang-options">
+        <a class="lang-option" href="/es" title="Español">
+          <svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#c60b1e"/><rect y="4" width="24" height="8" fill="#ffc400"/></svg>
+          <span>Español</span>
+        </a>
+        <a class="lang-option" href="/en" title="English">
+          <svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#012169"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="3"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#c8102e" stroke-width="1.8"/><path d="M12,0 V16 M0,8 H24" stroke="#fff" stroke-width="4.5"/><path d="M12,0 V16 M0,8 H24" stroke="#c8102e" stroke-width="3"/></svg>
+          <span>English</span>
+        </a>
+        <a class="lang-option" href="/ca" title="Català">
+          <svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#fcdd09"/><rect y="1.14" width="24" height="1.83" fill="#da121a"/><rect y="4.57" width="24" height="1.83" fill="#da121a"/><rect y="8" width="24" height="1.83" fill="#da121a"/><rect y="11.43" width="24" height="1.83" fill="#da121a"/><rect y="14.86" width="24" height="1.14" fill="#da121a"/></svg>
+          <span>Català</span>
+        </a>
+      </div>
+    </details>
     <a href="#join" class="cta-nav" data-i18n="nav_cta" style="flex-shrink:0">Join the table</a>
   </div>
 </nav>
@@ -1215,11 +1229,7 @@
       }
     });
 
-    // Update active flag button
-    ['en', 'es', 'ca'].forEach(l => {
-      const btn = document.getElementById('lang-btn-' + l);
-      if (btn) btn.classList.toggle('active', l === lang);
-    });
+    // (flag active state handled by URL/page load)
 
     // Update travel label
     const travelIdx = parseInt(document.getElementById('travel-slider').value);
@@ -1476,6 +1486,17 @@
 
   // ── Init ──
   applyTranslation(currentLang);
+
+  // Set current flag in dropdown summary
+  (function() {
+    const FLAGS = {
+      es: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#c60b1e"/><rect y="4" width="24" height="8" fill="#ffc400"/></svg>',
+      en: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#012169"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="3"/><path d="M0,0 L24,16 M24,0 L0,16" stroke="#c8102e" stroke-width="1.8"/><path d="M12,0 V16 M0,8 H24" stroke="#fff" stroke-width="4.5"/><path d="M12,0 V16 M0,8 H24" stroke="#c8102e" stroke-width="3"/></svg>',
+      ca: '<svg width="24" height="16" viewBox="0 0 24 16"><rect width="24" height="16" fill="#fcdd09"/><rect y="1.14" width="24" height="1.83" fill="#da121a"/><rect y="4.57" width="24" height="1.83" fill="#da121a"/><rect y="8" width="24" height="1.83" fill="#da121a"/><rect y="11.43" width="24" height="1.83" fill="#da121a"/><rect y="14.86" width="24" height="1.14" fill="#da121a"/></svg>',
+    };
+    const el = document.getElementById('lang-current-flag');
+    if (el) el.innerHTML = FLAGS[currentLang] || FLAGS.es;
+  })();
 </script>
 <script>
   if ('serviceWorker' in navigator) {
