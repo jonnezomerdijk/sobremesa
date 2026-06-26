@@ -99,21 +99,25 @@
       gap: 0.75rem;
     }
 
-    .lang-select {
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--green);
-      background: rgba(143,175,107,0.12);
-      border: 1.5px solid rgba(143,175,107,0.35);
-      border-radius: 999px;
-      padding: 0.3rem 0.8rem;
-      cursor: pointer;
-      outline: none;
+    .lang-switcher {
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
       flex-shrink: 0;
-      transition: background 0.15s;
     }
-    .lang-select:hover { background: rgba(143,175,107,0.22); }
+    .lang-btn {
+      background: transparent;
+      border: 2px solid transparent;
+      border-radius: 4px;
+      padding: 2px;
+      cursor: pointer;
+      opacity: 0.55;
+      transition: opacity 0.15s, border-color 0.15s;
+      display: flex;
+      align-items: center;
+    }
+    .lang-btn:hover { opacity: 1; }
+    .lang-btn.active { opacity: 1; border-color: rgba(122,45,62,0.4); }
 
     /* ── Hero ── */
     .hero {
@@ -670,12 +674,37 @@
       </svg></span><span class="logo-text" style="letter-spacing:0">bremesa</span>
   </a>
   <div class="nav-right">
-    <select id="lang-select" class="lang-select" onchange="applyTranslation(this.value)" aria-label="Language">
-      <option value="es">🇪🇸 Español</option>
-      <option value="en">🇬🇧 English</option>
-      <option value="ca">🏴 Català</option>
-    </select>
-    <a href="#join" class="cta-nav" data-i18n="nav_cta">Join the table</a>
+    <div class="lang-switcher">
+      <!-- Spain -->
+      <button class="lang-btn" id="lang-btn-es" title="Español" onclick="applyTranslation('es')">
+        <svg width="24" height="16" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="16" fill="#c60b1e"/>
+          <rect y="4" width="24" height="8" fill="#ffc400"/>
+        </svg>
+      </button>
+      <!-- UK -->
+      <button class="lang-btn" id="lang-btn-en" title="English" onclick="applyTranslation('en')">
+        <svg width="24" height="16" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="16" fill="#012169"/>
+          <path d="M0,0 L24,16 M24,0 L0,16" stroke="#fff" stroke-width="3"/>
+          <path d="M0,0 L24,16 M24,0 L0,16" stroke="#c8102e" stroke-width="1.8"/>
+          <path d="M12,0 V16 M0,8 H24" stroke="#fff" stroke-width="4.5"/>
+          <path d="M12,0 V16 M0,8 H24" stroke="#c8102e" stroke-width="3"/>
+        </svg>
+      </button>
+      <!-- Catalonia -->
+      <button class="lang-btn" id="lang-btn-ca" title="Català" onclick="applyTranslation('ca')">
+        <svg width="24" height="16" viewBox="0 0 24 16" xmlns="http://www.w3.org/2000/svg">
+          <rect width="24" height="16" fill="#fcdd09"/>
+          <rect y="1.14" width="24" height="1.83" fill="#da121a"/>
+          <rect y="4.57" width="24" height="1.83" fill="#da121a"/>
+          <rect y="8" width="24" height="1.83" fill="#da121a"/>
+          <rect y="11.43" width="24" height="1.83" fill="#da121a"/>
+          <rect y="14.86" width="24" height="1.14" fill="#da121a"/>
+        </svg>
+      </button>
+    </div>
+    <a href="#join" class="cta-nav" data-i18n="nav_cta" style="flex-shrink:0">Join the table</a>
   </div>
 </nav>
 
@@ -1186,9 +1215,11 @@
       }
     });
 
-    // Sync dropdown
-    const sel = document.getElementById('lang-select');
-    if (sel) sel.value = lang;
+    // Update active flag button
+    ['en', 'es', 'ca'].forEach(l => {
+      const btn = document.getElementById('lang-btn-' + l);
+      if (btn) btn.classList.toggle('active', l === lang);
+    });
 
     // Update travel label
     const travelIdx = parseInt(document.getElementById('travel-slider').value);
@@ -1444,7 +1475,7 @@
   }
 
   // ── Init ──
-  document.addEventListener('DOMContentLoaded', () => applyTranslation(currentLang));
+  applyTranslation(currentLang);
 </script>
 <script>
   if ('serviceWorker' in navigator) {
