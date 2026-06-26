@@ -194,8 +194,8 @@
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 58vw;
-      max-width: 660px;
+      width: 54vw;
+      max-width: 620px;
       min-width: 280px;
       pointer-events: none;
       z-index: 0;
@@ -1546,15 +1546,21 @@
   }, { threshold: 0.1 });
   _mapObserver.observe(document.getElementById('field-location'));
 
-  // Show tortilla only while hero is in view, hide for everything below
+  // Clip tortilla behind the .how section top edge as it scrolls up
   const _tortillaWrap = document.querySelector('.hero-image-wrap');
-  const _heroSection  = document.querySelector('.hero');
-  if (_tortillaWrap && _heroSection) {
-    _tortillaWrap.style.transition = 'opacity 0.3s';
-    new IntersectionObserver((entries) => {
-      _tortillaWrap.style.opacity = entries[0].isIntersecting ? '1' : '0';
-      _tortillaWrap.style.pointerEvents = 'none';
-    }, { threshold: 0.15 }).observe(_heroSection);
+  const _howSection   = document.querySelector('.how');
+  if (_tortillaWrap && _howSection) {
+    function _clipTortilla() {
+      const howTop = _howSection.getBoundingClientRect().top;
+      const vh = window.innerHeight;
+      // howTop in viewport coords: when positive, line is below viewport bottom
+      // clip the tortilla to everything above that line
+      const clipBottom = Math.min(Math.max(howTop, 0), vh);
+      _tortillaWrap.style.clipPath = `inset(0 0 ${vh - clipBottom}px 0)`;
+    }
+    window.addEventListener('scroll', _clipTortilla, { passive: true });
+    window.addEventListener('resize', _clipTortilla, { passive: true });
+    _clipTortilla();
   }
 
   // ── Link code ──
