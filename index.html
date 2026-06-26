@@ -169,42 +169,49 @@
     /* ── Hero ── */
     .hero {
       min-height: 100vh;
+      position: relative;
+      overflow: hidden;
       display: flex;
       align-items: center;
-      padding: 7rem 2rem 4rem;
-      max-width: 1100px;
-      margin: 0 auto;
     }
 
     .hero-inner {
-      display: flex;
-      align-items: center;
-      gap: 4rem;
+      position: relative;
+      z-index: 1;
+      padding: 7rem 2rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
       width: 100%;
     }
 
-    .hero-text { flex: 1; min-width: 0; }
+    .hero-text { max-width: 520px; }
 
     .hero-image-wrap {
-      flex: 0 0 460px;
-      position: relative;
-      /* let the tortilla bleed out on both sides intentionally */
-      margin-right: -3rem;
-      margin-left: -1rem;
+      position: absolute;
+      right: -8%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 54vw;
+      max-width: 700px;
+      min-width: 400px;
+      pointer-events: none;
     }
 
     .hero-image-wrap img {
       width: 100%;
       display: block;
-      /* subtle drop shadow that works on the transparent PNG */
-      filter: drop-shadow(0 16px 40px rgba(122,45,62,0.22));
+      filter: drop-shadow(-8px 20px 48px rgba(122,45,62,0.28));
     }
 
     @media (max-width: 780px) {
-      .hero-inner { flex-direction: column-reverse; gap: 1rem; }
       .hero-image-wrap {
-        flex: none; width: calc(100% + 4rem);
-        margin: 0 -2rem -1rem;
+        position: relative;
+        right: auto; top: auto;
+        transform: none;
+        width: calc(100% + 4rem);
+        min-width: 0;
+        max-width: none;
+        margin: 2rem -2rem -2rem;
       }
     }
 
@@ -791,6 +798,9 @@
 
 <!-- Hero -->
 <section class="hero">
+  <div class="hero-image-wrap">
+    <img src="/static/tortilla.png" alt="Tortilla española" />
+  </div>
   <div class="hero-inner">
     <div class="hero-text">
       <p class="eyebrow" data-i18n="hero_eyebrow">Barcelona · Coming soon</p>
@@ -799,9 +809,6 @@
         Sobremesa brings small groups together for home-cooked dinners. No bars, no apps, no awkward networking. Just good food, a table, and time to linger.
       </p>
       <a href="#join" class="hero-cta" data-i18n="hero_cta">Join the table</a>
-    </div>
-    <div class="hero-image-wrap">
-      <img src="/static/tortilla.png" alt="Tortilla española" />
     </div>
   </div>
 </section>
